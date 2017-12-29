@@ -1,0 +1,65 @@
+body {
+    background-color: #f7f7f7;
+}
+
+button {
+    cursor: pointer;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidenav {
+    height: 100%; 
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; 
+    z-index: 2000; 
+    top: 0; 
+    left: 0;
+    background-color: rgba(0,0,0,0.93); 
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 40px;
+    padding-bottom: 40px; 
+    transition: 0.5s;
+}
+
+.closebtn {
+    position: absolute;
+    cursor: pointer;
+    top: -40px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    z-index: 100;
+}
+
+.searchButt {
+    background-color: #EE5F46;
+    cursor: pointer;
+    color: white;
+}
+
+.width82 {
+    width: 82px;
+}
+
+.input-group-addon {
+    background-color: #EE5F46;
+    color: #F7F7F7;
+    border: 1px solid #dd553e;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left ease .7s;
+    transition: opacity ease .7s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}

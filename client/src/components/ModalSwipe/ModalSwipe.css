@@ -1,0 +1,37 @@
+a {
+	cursor: pointer;
+}
+
+#modal-image {
+	position: relative;
+}
+
+#modal-image img {
+	padding: 0;
+	height: 100%; 
+	width: 100%; 
+}
+
+#modal-text {
+	position: absolute;
+	bottom: 0;
+	left: auto;
+	right: auto;
+	color: rgb(238, 95, 70);
+}
+
+.fa-thumbs-down {
+	font-size: 50px;
+	position: absolute;
+	left: 2%;
+	top: 50%;
+	color: red;
+}
+
+.fa-thumbs-up {
+	font-size: 50px;
+	position: absolute;
+	right: 2%;
+	top: 50%;
+	color: green;
+}

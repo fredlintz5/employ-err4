@@ -1,0 +1,19 @@
+a:hover {
+	text-decoration: none;
+}
+
+.displayCard {
+	padding: 10px 0px 10px 15px;
+	border: 1px solid #DFDFDF;
+	cursor: pointer;
+	overflow: auto;
+}
+
+.displayCard img {
+	transition: all .3s;
+}
+
+
+.displayCard img:hover {
+	transform: scale(1.05);
+}

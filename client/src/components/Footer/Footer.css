@@ -1,0 +1,48 @@
+footer {
+	/*background-color: #212529;*/
+	background: linear-gradient(to right, #212529 , #EE5F46);
+	height: 100px;
+	position: relative;
+}
+
+footer h2 {
+	width: 100%;
+	background: linear-gradient(to right, #212529 , #EE5F46);
+}
+
+footer h3 {
+	color: #f7f7f7;
+	line-height: 100px;
+	padding-left: 40px;
+}
+
+.swipetext {
+	position: absolute;
+	bottom: 77px;
+	font-size: 12vw;
+	font-weight: 700;
+	font-style: italic;
+	-webkit-background-clip: text;
+	color: rgba(0,0,0,0);
+}
+
+@media (min-width: 575px) {
+	.swipetext {
+		bottom: 70px;
+	}
+}
+
+@media (min-width: 768px) { 
+	.swipetext {
+		bottom: 57px;
+	}
+}
+
+@media (min-width: 992px) { 
+	.swipetext {
+		bottom: 47px;
+	}
+}
+
+
+
