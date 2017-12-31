@@ -16,7 +16,7 @@ const UserSchema = new Schema({
 	connections: [],
 	denied: [],
 	type: String,
-	wesbite: String
+	website: String
 });
 
 const Users = mongoose.model('users', UserSchema);

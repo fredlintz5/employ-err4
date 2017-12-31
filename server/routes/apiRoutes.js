@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // return specific employee's database info for populating data in login page
-router.get(`/users/:id`, (req, res) => {
+router.get(`/users/user/:id`, (req, res) => {
 	Users.find({linkedInId: req.params.id})
 		.then(results => res.send(results))
 		.catch((err) => { 
@@ -39,11 +39,17 @@ router.put(`/users/profile/:id`, (req, res) => {
 
 
 
-// return all employees from database
-router.get('/users', (req, res) => {
-	Users.find({})
-		.then((results) => res.send(results))
-		.catch((err) => { 
+// return all employee users from database
+router.get('/users/employees/:id', (req, res) => {
+	Users.find({type: "employee"})
+		.then(results => {
+			if (results) { 
+				Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
+					 .then(response => res.send(response.status))
+					 .catch(err => console.log(err))
+			}
+		})
+		.catch(err => { 
 			res.status(500).send(err.message ? err.message : "Internal server blowup");
 		})
 });

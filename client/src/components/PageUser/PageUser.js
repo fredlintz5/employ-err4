@@ -39,7 +39,7 @@ class PageUser extends Component {
 	getProfile = () => {
 		let url = window.location.href.slice(27);
 
-		axios('/api/users/' + url)
+		axios('/api/users/user/' + url)
 		.then(res => {
 			if (res.data[0]) {
 				this.setState({
@@ -109,6 +109,13 @@ class PageUser extends Component {
 
 	thumbsUp
 
+	searchMatches = () => {
+		axios.get(`/api/users/employees/${this.state.id}`)
+			 .then(response => response.status === 200 ? this.getProfile() : console.log('shit'))
+			 // .then(response => this.setState({matches: [...this.state.matches, ...response.data]}))
+			 .catch(err => console.log(err))
+	}
+
 	render () {
 		return (
 			<div>
@@ -132,7 +139,7 @@ class PageUser extends Component {
 								<Dropdown textColor="black"/>
 							</div>
 							<div className="col-md-4 text-center" style={{marginBottom: '10px'}}>
-								<button className="btn searchButt" data-toggle="modal" href='#employerModal'>SEARCH</button>
+								<button className="btn searchButt" onClick={() => this.searchMatches()}>SEARCH</button>
 							</div>
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
