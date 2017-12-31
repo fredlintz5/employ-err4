@@ -157,12 +157,11 @@ class PageUser extends Component {
 					<Navigator openNav={this.openNav} closeNav={this.closeNav} navOpen={this.state.navOpen} none='none'/>
 
 					<div id="mySidenav" className="sidenav" style={{zIndex: "2000"}}>
-					  <a style={{color:"white"}} className="closebtn" onClick={() => this.closeNav()}>&times;</a>
-					  <ProfileUser data={this.state.allData} 
-					  			   update={this.updateProfile} 
-					  			   openNav={this.openNav} 
-					  			   closeNav={this.closeNav}
-					  			   display={this.state.type}/>
+					  	<ProfileUser data={this.state.allData} 
+					  			     update={this.updateProfile} 
+					  			     openNav={this.openNav} 
+					  			     closeNav={this.closeNav}
+					  			     display={this.state.type}/>
 					</div>
 
 					<div className="container" id="main" style={{height: "auto", paddingTop: "75px"}}>

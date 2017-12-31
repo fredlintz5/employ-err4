@@ -9,7 +9,7 @@ function Navigator(props) {
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
-          <div id="caretDiv" style={{backgroundColor: "rgba(0,0,0,0.93)"}}>  
+          <div id="caretDiv" style={{display: props.home}}>  
             <i  className={`fa fa-caret-right text-primary ${props.hide}`} id="caret" 
                 onClick={() => props.navOpen ? props.closeNav() : props.openNav()}/>
           </div>
