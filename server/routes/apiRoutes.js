@@ -31,27 +31,36 @@ router.put(`/users/profile/:id`, (req, res) => {
 			{ $set: { 
 				
 			}})
-		.then((results) => res.send(results))
-		.catch((err) => { 
-			res.status(500).send(err.message ? err.message : "Internal server blowup");
-		})
+		.then( results => res.send(results))
+		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
 
 
+// PUT ROUTE TO check against already existing linkedInId's in users matches array, and add any that aren't already there
+router.put('/users/employees/:id', (req, res) => {
+	Users.find({ $and : [{linkedInId: {$nin: req.body.linkedInArray}},{type: 'employee'}]})
+		 .then(results => {
+		 	if (results.length > 0) {
+		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
+		 		 .then(result => res.send('success'))
+				 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
+		 	}
+		 })
+		 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
+});
 
-// return all employee users from database
+
+// Initial fetch for all users with type = 'employee', and add results to users matches
 router.get('/users/employees/:id', (req, res) => {
-	Users.find({type: "employee"})
-		.then(results => {
-			if (results) { 
-				Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
-					 .then(response => res.send(response.status))
-					 .catch(err => console.log(err))
-			}
-		})
-		.catch(err => { 
-			res.status(500).send(err.message ? err.message : "Internal server blowup");
-		})
+	Users.find({type: 'employee'})
+		 .then(results => {
+		 	if (results.length > 0) {
+		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
+		 		 .then(result => res.send('success'))
+				 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
+		 	}
+		 })
+		 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
 
 
