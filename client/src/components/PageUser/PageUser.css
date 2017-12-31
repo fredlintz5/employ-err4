@@ -25,7 +25,7 @@ button {
     transition: 0.5s;
 }
 
-.closebtn {
+/*.closebtn {
     position: absolute;
     cursor: pointer;
     top: -40px;
@@ -33,7 +33,7 @@ button {
     font-size: 36px;
     margin-left: 50px;
     z-index: 100;
-}
+}*/
 
 .searchButt {
     background-color: #EE5F46;
@@ -50,6 +50,14 @@ button {
     color: #F7F7F7;
     border: 1px solid #dd553e;
 }
+
+#alert {
+    opacity: 0;
+    margin-top: -73px;
+    padding: 15px 0px 0px 0px;
+    transition: opacity ease .7s, margin ease .7s;
+}
+
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
