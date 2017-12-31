@@ -9,9 +9,9 @@ function Card(props) {
 				<img src={props.image} alt="user" height="70px" style={{borderRadius: "100%"}}/>
 			</div>
 			<div className="col-sm-8" style={{lineHeight: "5px", padding: "10px 0px 0px 20px"}}>
-		    	<p>{props.displayName}</p>
-		    	<p>{props.title}</p>
-		    	<p>{props.bio}</p>
+		    	<p>{props.displayName.slice(0, 35)}</p>
+		    	<p>{props.title.slice(0, 35)}</p>
+		    	<p>{props.bio.slice(0, 35)}</p>
 			</div>
 		</a>
 	)
