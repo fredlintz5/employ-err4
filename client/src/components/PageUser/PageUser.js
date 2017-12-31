@@ -21,6 +21,7 @@ class PageUser extends Component {
 		matches: [],
 		connections: [],
 		denied: [],
+		navOpen: false
 	}
 
 	componentWillMount() {
@@ -82,6 +83,9 @@ class PageUser extends Component {
 		document.getElementById("main").style.opacity = "0.15";
 		document.getElementById('main').style.pointerEvents = 'none';
 		document.getElementById('root').classList.add("stop-scrolling");
+		document.getElementById('caretDiv').style.transform ="rotate(-180deg)";
+		document.getElementById('caretDiv').style.left = "375px";
+		this.setState({navOpen: true})
 	}
 
 	closeNav = () => {
@@ -89,6 +93,9 @@ class PageUser extends Component {
 		document.getElementById("main").style.opacity = "1.0";
 		document.getElementById('main').style.pointerEvents = 'auto';
 		document.getElementById('root').classList.remove("stop-scrolling");
+		document.getElementById('caretDiv').style.transform = "rotate(0deg)";
+		document.getElementById('caretDiv').style.left = "0px";
+		this.setState({navOpen: false})
 	}
 
 	displayBreak = () => {
@@ -137,7 +144,7 @@ class PageUser extends Component {
 			<div>
 			{this.state.type === "" ? <Question setType={this.setUserType}/> : 
 				<div>
-					<Navigator openNav={this.openNav} none='none'/>
+					<Navigator openNav={this.openNav} closeNav={this.closeNav} navOpen={this.state.navOpen} none='none'/>
 
 					<div id="mySidenav" className="sidenav" style={{zIndex: "2000"}}>
 					  <a style={{color:"white"}} className="closebtn" onClick={() => this.closeNav()}>&times;</a>
