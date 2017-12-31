@@ -110,10 +110,26 @@ class PageUser extends Component {
 	thumbsUp
 
 	searchMatches = () => {
-		axios.get(`/api/users/employees/${this.state.id}`)
-			 .then(response => response.status === 200 ? this.getProfile() : console.log('shit'))
-			 // .then(response => this.setState({matches: [...this.state.matches, ...response.data]}))
-			 .catch(err => console.log(err))
+		let matchedIds = [];
+
+		if (this.state.matches.length > 0) {
+			matchedIds = this.state.matches.map(match => match.linkedInId);
+			
+			axios.put(`/api/users/employees/${this.state.id}`,{linkedInArray: matchedIds})
+				 .then(result => (result.data === 'success') 
+				 	? this.getProfile()
+				 	: console.log("WTF?"))
+				 .catch(err => console.log(err))
+			
+		} else {
+			axios.get(`/api/users/employees/${this.state.id}`)
+				 .then(result => (result.data === 'success') 
+				 	? this.getProfile()
+				 	: console.log("WTF?"))
+				 .catch(err => console.log(err))
+		}
+
+		
 	}
 
 	render () {

@@ -51,7 +51,22 @@ db.getCollection('users').insert([{
     skills: [],
     desiredSkills: []
 },
-{linkedInId: "453425234", displayName: "Greg Blatt", image: "https://static.dezeen.com/uploads/2017/08/tinder-redesign-graphics_dezeen_redo-2-852x421.jpg", title: "Ceo - Tinder", bio: "Tesla Cars are so badass", email: "greg@email.com", website: "tinder.com", matches: [], connections: [], denied: []}
+{
+    linkedInId: "453425234", 
+    displayName: "Greg Blatt", 
+    image: "https://static.dezeen.com/uploads/2017/08/tinder-redesign-graphics_dezeen_redo-2-852x421.jpg", 
+    title: "Ceo - Tinder", 
+    bio: "Tesla Cars are so badass", 
+    email: "greg@email.com", 
+    type: 'employee',
+    searchable: true, 
+    website: "tinder.com", 
+    matches: [], 
+    connections: [], 
+    denied: [],
+    skills: [],
+    desiredSkills: []
+}
 
 
 
