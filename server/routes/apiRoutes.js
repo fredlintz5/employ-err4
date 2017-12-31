@@ -44,7 +44,7 @@ router.put('/users/employees/:id', (req, res) => {
 		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
 		 		 .then(result => res.send('success'))
 				 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
-		 	}
+		 	} else res.send('no new results')
 		 })
 		 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });

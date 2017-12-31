@@ -123,9 +123,19 @@ class PageUser extends Component {
 			matchedIds = this.state.matches.map(match => match.linkedInId);
 			
 			axios.put(`/api/users/employees/${this.state.id}`,{linkedInArray: matchedIds})
-				 .then(result => (result.data === 'success') 
-				 	? this.getProfile()
-				 	: console.log("WTF?"))
+				 .then(result => {
+				 	if (result.data === 'success') {
+				 		this.getProfile()
+				 	} else {
+				 		document.getElementById("alert").style.marginTop = "0px";
+				 		document.getElementById("alert").style.opacity = "1";
+				 		setTimeout(() => {
+				 			document.getElementById("alert").style.marginTop = "-73px";
+				 			document.getElementById("alert").style.opacity = "0";
+				 		}, 2000)
+				 		console.log('No new Results')
+				 	}
+				 })
 				 .catch(err => console.log(err))
 			
 		} else {
@@ -156,6 +166,9 @@ class PageUser extends Component {
 					</div>
 
 					<div className="container" id="main" style={{height: "auto", paddingTop: "75px"}}>
+						<div className="text-center alert alert-dark" id="alert">
+							<p>No New Matches Available...</p>
+						</div>
 						<br style={{display: this.displayBreak()}} />
 						<div className="row" style={{display: this.displayRow()}}> 
 							<div className="col-md-8 text-center" style={{paddingTop: "5px"}}>
@@ -166,12 +179,12 @@ class PageUser extends Component {
 							</div>
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
-							<div className="col-md-6">
+							<div className="col-md-6" style={{marginBottom: "25px"}}>
 								<Matches data={this.state.matches} 
 										 employee='employers' 
 										 toggle="modal" 
 										 href='#swipeModal'/>
-							</div>
+							</div>							
 							<div className="col-md-6">
 								<Connections data={this.state.connections} 
 											 toggle="" 
