@@ -191,7 +191,7 @@ class PageUser extends Component {
 							</div>
 						</div>
 						<br />
-						<ModalSwipe data={this.state.matches}/>
+						{/*<ModalSwipe data={this.state.matches}/>*/}
 					</div>
 					<Footer />
 				</div>
