@@ -27,7 +27,7 @@ function Navigator(props) {
                             onClick={() => props.navOpen ? props.closeNav() : props.openNav()}>Profile</a></strong>
               </li>
               <li className="nav-item active">
-                <strong><a className="nav-link" style={{display: props.home}} href={logoutURL} >Logout</a></strong>
+                <strong><a className="nav-link" style={{display: props.home}} href='/' >Logout</a></strong>
               </li>
             </ul>
           </div>

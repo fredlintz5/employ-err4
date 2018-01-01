@@ -8,7 +8,8 @@ const LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
 passport.serializeUser((user, done) => done(null, user.id));
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((id, done) => {	
+	console.log(id);
 	Users.findById(id)
 		.then((user) => done(null, user));
 });
@@ -17,7 +18,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new LinkedinStrategy({
 	clientID: process.env.CLIENT_ID || keys.linkedIn.clientID,
 	clientSecret: process.env.CLIENT_SECRET || keys.linkedIn.clientSecret,
-	callbackURL: "http://localhost:8080/auth/linkedin/callback",
+	callbackURL: process.env.CALLBACK_URL || "http://localhost:8080/auth/linkedin/callback",
 	}, (accessToken, refreshToken, profile, done) => {
 		Users.findOne({linkedInId: profile.id})
 			.then((result) => {

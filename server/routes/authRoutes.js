@@ -2,6 +2,8 @@ import express from 'express';
 import passport from 'passport';
 
 const router = express.Router();
+const homePage = process.env.HOME || 'http://localhost:3000/';
+const loginPage = process.env.LOGIN || 'http://localhost:3000/user/';
 
 
 
@@ -16,19 +18,15 @@ router.get('/linkedin',
 
 // linkedin redirect after authentication
 router.get('/linkedin/callback',
-	passport.authenticate('linkedin', { failureRedirect: 'http://localhost:3000/' }),
-	(req, res) => res.redirect(`http://localhost:3000/user/${req.user.linkedInId}`)
+	passport.authenticate('linkedin', { failureRedirect: homePage }),
+	(req, res) => res.redirect(`${loginPage}${req.user.linkedInId}`)
 );
 
 
 // logout linkedIn user and return to home page
 router.get('/logout', (req, res) => {
-	req.session.destroy(err => {
-		if(err) return next(err)
-
-		req.logout()
-		res.redirect('http://localhost:3000/')
-	})
+	// req.logout()
+	res.redirect(homePage)
 })
 
 
