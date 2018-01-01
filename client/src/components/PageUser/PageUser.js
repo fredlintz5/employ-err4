@@ -29,7 +29,7 @@ class PageUser extends Component {
 	}
 
 	setUserType = (type) => {
-		let url = window.location.href.slice(27);
+		let url = window.location.href.slice(38); {/*27 for dev*/}
 
 		this.setState({type: type});
 		axios.put(`/api/users/type/${url}`, {
@@ -38,7 +38,7 @@ class PageUser extends Component {
 	}
 
 	getProfile = () => {
-		let url = window.location.href.slice(27);
+		let url = window.location.href.slice(38); {/*27 for dev*/}
 
 		axios('/api/users/user/' + url)
 		.then(res => {
