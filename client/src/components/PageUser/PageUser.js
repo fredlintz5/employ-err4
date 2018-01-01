@@ -133,7 +133,6 @@ class PageUser extends Component {
 				 			document.getElementById("alert").style.marginTop = "-73px";
 				 			document.getElementById("alert").style.opacity = "0";
 				 		}, 2000)
-				 		console.log('No new Results')
 				 	}
 				 })
 				 .catch(err => console.log(err))
