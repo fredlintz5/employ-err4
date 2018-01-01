@@ -15,8 +15,8 @@ passport.deserializeUser((id, done) => {
 
 
 passport.use(new LinkedinStrategy({
-	clientID: keys.linkedIn.clientID,
-	clientSecret: keys.linkedIn.clientSecret,
+	clientID: process.env.CLIENT_ID || keys.linkedIn.clientID,
+	clientSecret: process.env.CLIENT_SECRET || keys.linkedIn.clientSecret,
 	callbackURL: "http://localhost:8080/auth/linkedin/callback",
 	}, (accessToken, refreshToken, profile, done) => {
 		Users.findOne({linkedInId: profile.id})
