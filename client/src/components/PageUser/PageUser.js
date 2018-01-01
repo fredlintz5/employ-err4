@@ -145,8 +145,6 @@ class PageUser extends Component {
 				 	: console.log("WTF?"))
 				 .catch(err => console.log(err))
 		}
-
-		
 	}
 
 	render () {
@@ -191,7 +189,7 @@ class PageUser extends Component {
 							</div>
 						</div>
 						<br />
-						{/*<ModalSwipe data={this.state.matches}/>*/}
+						<ModalSwipe data={this.state.matches}/>
 					</div>
 					<Footer />
 				</div>
