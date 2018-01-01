@@ -35,6 +35,29 @@ router.put(`/users/profile/:id`, (req, res) => {
 		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
 
+//thumbs up route
+router.put(`/users/update/:id`, (req, res) => {
+	users.update({linkedInId: req.params.id},
+		then(results => {
+			if (results) {
+				users.update
+				push: {connecton: req.body.match}
+			
+			}})
+		)
+});
+
+//thumbs down route
+router.put(`/users/remove/:id`, (req, res) => {
+	users.update({linkedInId: req.params.id},
+		{$pull: {matches: {linkedInId: req.body.id}
+			.then (results => {
+				if (results) {
+					users.update
+				push: {denied: {req.body.match}
+			}
+		}})
+	}});
 
 // PUT ROUTE TO check against already existing linkedInId's in users matches array, and add any that aren't already there
 router.put('/users/employees/:id', (req, res) => {
