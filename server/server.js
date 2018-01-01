@@ -20,9 +20,9 @@ const staticFiles = express.static(path.join(__dirname, '../../client/build'));
 const databaseUri = 'mongodb://localhost/employer';
 
 if (process.env.MONGODB_URI) {
-	mongoose.connect(process.env.MONGODB_URI)
+	mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true})
 } else {
-	mongoose.connect(databaseUri);
+	mongoose.connect(databaseUri, {useMongoClient: true});
 }
 
 mongoose.Promise = Promise;
