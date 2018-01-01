@@ -9,7 +9,6 @@ const LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 passport.serializeUser((user, done) => done(null, user.id));
 
 passport.deserializeUser((id, done) => {	
-	console.log(id);
 	Users.findById(id)
 		.then((user) => done(null, user));
 });
