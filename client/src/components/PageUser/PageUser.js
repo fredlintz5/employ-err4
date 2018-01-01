@@ -124,7 +124,17 @@ class PageUser extends Component {
 		 	.catch(err => err)
 		 	)
 		}
-	
+
+	thumbsDown = () => {
+			 axios.put('users/remove/:id'),
+		 {
+		 	match: this.state.matches[0],
+		 	id: this.state.matches[0].linkedInId
+		 }
+		 .then(res => 'User Updated'
+		 	.catch(err => err)
+		 	)
+		}
 
 
 	searchMatches = () => {
