@@ -20,14 +20,14 @@ function Navigator(props) {
             <ul className="navbar-nav mr-auto"></ul>
             <ul className="navbar-nav nav-flex-icons">
               <li className="nav-item active">
-               <strong> <a className="nav-link" style={{display: props.none}} href=loginURL >Login</a></strong>
+               <strong> <a className="nav-link" style={{display: props.none}} href={loginURL} >Login</a></strong>
               </li>
               <li className="nav-item active">
                 <strong><a className="nav-link" style={{display: props.home}} 
                             onClick={() => props.navOpen ? props.closeNav() : props.openNav()}>Profile</a></strong>
               </li>
               <li className="nav-item active">
-                <strong><a className="nav-link" style={{display: props.home}}href=logoutURL >Logout</a></strong>
+                <strong><a className="nav-link" style={{display: props.home}} href={logoutURL} >Logout</a></strong>
               </li>
             </ul>
           </div>
