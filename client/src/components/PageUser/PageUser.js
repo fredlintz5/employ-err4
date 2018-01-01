@@ -29,7 +29,7 @@ class PageUser extends Component {
 	}
 
 	setUserType = (type) => {
-		let url = window.location.href.slice(38); {/*27 for dev*/}
+		let url = window.location.href.slice(27); {/*38 for prod*/}
 
 		this.setState({type: type});
 		axios.put(`/api/users/type/${url}`, {
@@ -38,7 +38,7 @@ class PageUser extends Component {
 	}
 
 	getProfile = () => {
-		let url = window.location.href.slice(38); {/*27 for dev*/}
+		let url = window.location.href.slice(27); {/*38 for prod*/}
 
 		axios('/api/users/user/' + url)
 		.then(res => {
@@ -115,26 +115,20 @@ class PageUser extends Component {
 	}
 
 	thumbsUp = () => {
-		 axios.put('users/update/:id'),
-		 {
-		 	match: this.state.matches[0],
-		 	id: this.state.matches[0].linkedInId
-		 }
-		 .then(res => 'User Updated'
-		 	.catch(err => err)
-		 	)
-		}
+		axios.put(`/api/users/thumbsup/${this.state.id}`,{match: this.state.matches[0]})
+			 .then(result => (result.data === 'success' 
+							 	? this.getProfile() 
+							 	: console.log("shit didnt work")))
+			 .catch(err => console.log(err))
+	}
 
 	thumbsDown = () => {
-			 axios.put('users/remove/:id'),
-		 {
-		 	match: this.state.matches[0],
-		 	id: this.state.matches[0].linkedInId
-		 }
-		 .then(res => 'User Updated'
-		 	.catch(err => err)
-		 	)
-		}
+		axios.put(`/api/users/thumbsdown/${this.state.id}`,{match: this.state.matches[0]})
+			 .then(result => (result.data === 'success' 
+							 	? this.getProfile() 
+							 	: console.log("shit didnt work")))
+			 .catch(err => console.log(err))
+	}
 
 
 	searchMatches = () => {
@@ -209,7 +203,9 @@ class PageUser extends Component {
 							</div>
 						</div>
 						<br />
-						<ModalSwipe data={this.state.matches}/>
+						<ModalSwipe data={this.state.matches}
+									thumbsDown={this.thumbsDown}
+									thumbsUp={this.thumbsUp}/>
 					</div>
 					<Footer />
 				</div>
