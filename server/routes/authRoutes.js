@@ -19,7 +19,7 @@ router.get('/linkedin',
 // linkedin redirect after authentication
 router.get('/linkedin/callback',
 	passport.authenticate('linkedin', { failureRedirect: homePage }),
-	(req, res) => res.redirect(`${loginPage}${req.user.linkedInId}`)
+	(req, res) => res.redirect(loginPage + req.user.linkedInId)
 );
 
 
