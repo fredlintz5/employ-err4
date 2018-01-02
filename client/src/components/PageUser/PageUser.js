@@ -93,7 +93,7 @@ class PageUser extends Component {
 	}
 
 	thumbsUp = () => {
-		axios.put(`/api/users/thumbsup/${this.state.id}`,{match: this.state.userData.matches[0]})
+		axios.put(`/api/users/thumbsup/${this.state.id}/${this.state.type}`, {userData: this.state.userData})
 			 .then(result => (
 			 	result.data === 'success' 
 				 	? this.getProfile() 
@@ -122,11 +122,17 @@ class PageUser extends Component {
 
 	searchMatches = () => {
 		let matchedIds = [];
+		let pendingIds = [];
 
-		if (this.state.userData.matches.length > 0) {
+		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 ) {
 			matchedIds = this.state.userData.matches.map(match => match.linkedInId);
+			pendingIds = this.state.userData.pendingMatches.map(pending => pending.linkedInId);
 			
-			axios.put(`/api/users/employees/${this.state.id}`,{linkedInArray: matchedIds})
+			axios.put(`/api/users/employees/${this.state.id}`,
+				{
+					matchedIds: matchedIds,
+					pendingIds: pendingIds
+				})
 				 .then(result => {
 				 	if (result.data === 'success') {
 				 		this.getProfile()
@@ -185,7 +191,7 @@ class PageUser extends Component {
 							<div className="col-md-6" style={{marginBottom: "25px"}}>
 								<Matches matches={this.state.userData.matches} 
 										 pendingMatches={this.state.userData.pendingMatches}
-										 employee='employers' 
+										 type={this.state.type} 
 										 toggle="modal" 
 										 href='modal'
 										 pendingClick={this.pendingClick}/>

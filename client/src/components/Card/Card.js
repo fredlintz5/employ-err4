@@ -39,14 +39,15 @@ class Card extends Component {
 	}
 
 	render () {
-		const {toggle, href, image, pending, displayName, title, bio} = this.props;
+		const {toggle, href, image, pending, displayName, title, bio, type, linkedInId} = this.props;
 		return (
 			<a className="row displayCard" data-toggle={this.setToggle(toggle)} 
 										   href={this.setHref(href)}
+										   data-linkedinid={linkedInId}
 										   onClick={() => this.setOnClick(pending)}>
 				<div className="col-lg-4 text-center" style={{paddingLeft: "10px"}}>
 					<img src={image} alt="user" height="70px" style={{borderRadius: "100%"}}/>
-					<span id="thumbsUp"><i style={pending ? {display: "block"} : {display: "none"}} className="fa fa-thumbs-up" aria-hidden="false"></i></span>
+					<span id="thumbsUp"><i style={pending && type === "employer" ? {display: "block"} : {display: "none"}} className="fa fa-thumbs-up" aria-hidden="false"></i></span>
 				</div>
 				<div className="col-lg-8" style={{padding: "10px 0px 0px 20px"}}>
 			    	<p>{displayName.slice(0, 35)}</p>
