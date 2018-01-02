@@ -8,12 +8,6 @@ function ModalSwipe(props) {
 		<div className="modal fade" id="swipeModal" tabIndex="-1" role="dialog" aria-hidden="true">
 			<div className="modal-dialog" role="document">
 				<div className="modal-content">
-					{/*<div className="modal-header">
-						<h5 className="modal-title" >{props.data[0] ? props.data[0].displayName.slice(0,35) : "YOU ARE OUT OF MATCHES"}</h5>
-						<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>*/}
 					<div className="modal-body" style={{padding: "0px"}}>
 						<div id="modal-image">
 							<img src={props.data[0] ? props.data[0].image : "https://tinyurl.com/ybgx3yx8"} alt="Employer Modal"/>
