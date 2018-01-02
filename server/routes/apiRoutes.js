@@ -35,6 +35,38 @@ router.put(`/users/profile/:id`, (req, res) => {
 		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
 
+//thumbs up route
+router.put(`/users/thumbsup/:id`, (req, res) => {
+	Users.update({linkedInId: req.params.id},
+		{$pull: {matches: {linkedInId: req.body.match.linkedInId}}, 
+		 $push: {connections: req.body.match}})
+		 .then(results => { res.send('success')
+			// if (results) {
+			// 	Users.update({linkedInId: req.body.match.linkedInId}, 
+			// 		 {$push: {matches: req.body.match}})
+			// 		 .then(result => res.send('success'))
+			// 		 .catch(err => console.log(err))
+		 //    }
+		})
+		 .catch(err => console.log(err))	
+});
+
+//thumbs down route
+router.put(`/users/thumbsdown/:id`, (req, res) => {
+	Users.update({linkedInId: req.params.id},
+		 {$pull: {matches: {linkedInId: req.body.match.linkedInId}}})
+		 .then(results => {
+		 	// console.log(results)
+			if (results) {
+				Users.update({linkedInId: req.params.id}, 
+					 {$push: {denied: req.body.match}})
+					 .then(result => res.send('success'))
+					 .catch(err => console.log(err))
+		    }
+		})
+		 .catch(err => console.log(err))		 
+});
+
 
 // PUT ROUTE TO check against already existing linkedInId's in users matches array, and add any that aren't already there
 router.put('/users/employees/:id', (req, res) => {
