@@ -2,11 +2,28 @@ a:hover {
 	text-decoration: none;
 }
 
+#thumbsUp {
+	position: absolute;
+	left: 15%;
+    top: 35%;
+}
+
+#thumbsUp i {
+	color: rgba(0,0,0,0.7);
+	font-size: 20px;
+}
+
+#thumbsUp:hover {
+	transform: scale(1.1)
+}
+
 .displayCard {
 	padding: 10px 0px 10px 15px;
 	border-bottom: 1px solid #DFDFDF;
 	cursor: pointer;
 	overflow: auto;
+	position: relative;
+	color: #f05f40 !important;
 }
 
 .displayCard img {
