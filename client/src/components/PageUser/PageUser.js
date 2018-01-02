@@ -98,22 +98,6 @@ class PageUser extends Component {
 		this.setState({navOpen: false})
 	}
 
-	displayBreak = () => {
-		if (this.state.type === "" || this.state.type === 'employee') {		
-			return '';
-		} else {
-			return "none";
-		}
-	}
-
-	displayRow = () => {
-		if (this.state.type === "" || this.state.type === 'employee') {		
-			return 'none';
-		} else {
-			return "";
-		}
-	}
-
 	thumbsUp = () => {
 		axios.put(`/api/users/thumbsup/${this.state.id}`,{match: this.state.matches[0]})
 			 .then(result => (
@@ -182,8 +166,8 @@ class PageUser extends Component {
 						<div className="text-center alert alert-dark" id="alert">
 							<p>No New Matches Available...</p>
 						</div>
-						<br style={{display: this.displayBreak()}} />
-						<div className="row" style={{display: this.displayRow()}}> 
+						<br style={(this.state.type === 'employee') ? {display: ""} : {display: "none"}} />
+						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
 							<div className="col-md-8 text-center" style={{paddingTop: "5px"}}>
 								<Dropdown textColor="black"/>
 							</div>
@@ -209,7 +193,7 @@ class PageUser extends Component {
 									thumbsDown={this.thumbsDown}
 									thumbsUp={this.thumbsUp}/>
 					</div>
-					<Footer />
+					<Footer hideText={this.state.id}/>
 				</div>
 			}
 			</div>
