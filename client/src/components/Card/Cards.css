@@ -4,13 +4,20 @@ a:hover {
 
 #thumbsUp {
 	position: absolute;
-	left: 15%;
+	left: -5px;
     top: 35%;
+    height: 30px;
+    width: 30px;
+    border-radius: 6px;
+    background-color: #D2ECF1;
+    box-shadow: rgba(0,0,0,0.2) 0.5px 1px 0.2px;
 }
 
 #thumbsUp i {
-	color: rgba(0,0,0,0.7);
-	font-size: 20px;
+	color: #11545F;
+    font-size: 20px;
+    padding-top: 4px;
+    position: unset;
 }
 
 #thumbsUp:hover {

@@ -19,8 +19,8 @@ function Matches(props) {
 			  			image={card.image}
 			  			title={card.title}
 			  			bio={card.bio}
-			  			type={props.type}
-			  			href={props.href}
+			  			type={props.type} 
+			  			href={props.href} 
 			  			toggle={props.toggle}/>))
 	  			: "No Data Yet" }
 	  		{ props.pendingMatches

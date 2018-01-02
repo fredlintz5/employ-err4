@@ -10,7 +10,7 @@ import "./ModalSwipe.css"
 							<div id="modal-image">
 								<img src={props.pendingMatches[0] ? props.pendingMatches[0].image : "https://tinyurl.com/ybgx3yx8"} alt="Employer Modal"/>
 								<a style={props.pendingMatches[0] ? {display: "block"} : {display: 'none'}} onClick={() => props.thumbsDown()}><i className="fa fa-thumbs-down" aria-hidden="false"></i></a>
-								<a style={props.pendingMatches[0] ? {display: "block"} : {display: 'none'}} onClick={() => props.thumbsUp()}>props.<i className="fa fa-thumbs-up" aria-hidden="false"></i></a>
+								<a style={props.pendingMatches[0] ? {display: "block"} : {display: 'none'}} onClick={() => props.thumbsUp()}><i className="fa fa-thumbs-up" aria-hidden="false"></i></a>
 							</div>
 							<div className="modal-footer text-center" id="modal-text">
 								<p style={{fontSize: "1.5em"}}>{props.pendingMatches[0] ? props.pendingMatches[0].displayName.slice(0,35) : "YOU ARE OUT OF MATCHES"}</p>
