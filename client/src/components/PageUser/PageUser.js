@@ -116,17 +116,19 @@ class PageUser extends Component {
 
 	thumbsUp = () => {
 		axios.put(`/api/users/thumbsup/${this.state.id}`,{match: this.state.matches[0]})
-			 .then(result => (result.data === 'success' 
-							 	? this.getProfile() 
-							 	: console.log("shit didnt work")))
+			 .then(result => (
+			 	result.data === 'success' 
+				 	? this.getProfile() 
+				 	: console.log("shit didnt work")))
 			 .catch(err => console.log(err))
 	}
 
 	thumbsDown = () => {
 		axios.put(`/api/users/thumbsdown/${this.state.id}`,{match: this.state.matches[0]})
-			 .then(result => (result.data === 'success' 
-							 	? this.getProfile() 
-							 	: console.log("shit didnt work")))
+			 .then(result => (
+			 	result.data === 'success' 
+				 	? this.getProfile() 
+				 	: console.log("shit didnt work")))
 			 .catch(err => console.log(err))
 	}
 
