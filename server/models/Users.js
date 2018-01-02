@@ -13,6 +13,7 @@ const UserSchema = new Schema({
 	skills: [],
 	desiredSkills: [],
 	matches: [],
+	pendingMatches: [],
 	connections: [],
 	denied: [],
 	type: String,
