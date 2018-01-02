@@ -13,6 +13,9 @@ a:hover {
 	transition: all .3s;
 }
 
+.displayCard p {
+	margin-bottom: -5px;
+}
 
 .displayCard img:hover {
 	transform: scale(1.05);
