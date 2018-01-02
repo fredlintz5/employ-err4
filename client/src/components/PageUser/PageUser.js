@@ -202,7 +202,9 @@ class PageUser extends Component {
 											 href="connections"/>
 							</div>
 						</div>
-						<ModalSwipe data={this.state.userData.matches}
+						<ModalSwipe matches={this.state.userData.matches}
+									pendingMatches={this.state.userData.pendingMatches}
+									type={this.state.type}
 									thumbsDown={this.thumbsDown}
 									thumbsUp={this.thumbsUp}/>
 					</div>
