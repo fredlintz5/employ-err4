@@ -9,7 +9,7 @@ function ModalSwipe(props) {
 			<div className="modal-dialog" role="document">
 				<div className="modal-content">
 					<div className="modal-header">
-						<h5 className="modal-title" >{props.data[0] ? props.data[0].displayName.slice(0,35) : "Display Name Here..."}</h5>
+						<h5 className="modal-title" >{props.data[0] ? props.data[0].displayName.slice(0,35) : "YOU ARE OUT OF MATCHES"}</h5>
 						<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
