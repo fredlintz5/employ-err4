@@ -38,7 +38,9 @@ router.put(`/users/thumbsup/:id`, (req, res) => {
 	Users.update({linkedInId: req.params.id},
 		{$pull: {matches: {linkedInId: req.body.match.linkedInId}}, 
 		 $push: {connections: req.body.match}})
-		 .then(results => { res.send('success')
+		 .then(results => { 
+		 	res.send('success');
+		 	console.log(results);
 			// if (results) {
 			// 	Users.update({linkedInId: req.body.match.linkedInId}, 
 			// 		 {$push: {matches: req.body.match}})
@@ -52,15 +54,18 @@ router.put(`/users/thumbsup/:id`, (req, res) => {
 //thumbs down route
 router.put(`/users/thumbsdown/:id`, (req, res) => {
 	Users.update({linkedInId: req.params.id},
-		 {$pull: {matches: {linkedInId: req.body.match.linkedInId}}})
-		 .then(results => {
+		{$pull: {matches: {linkedInId: req.body.match.linkedInId}}, 
+		 $push: {denied: req.body.match}})
+		 .then(results => { 
+		 	res.send('success');
+		 	console.log(results);
 		 	// console.log(results)
-			if (results) {
-				Users.update({linkedInId: req.params.id}, 
-					 {$push: {denied: req.body.match}})
-					 .then(result => res.send('success'))
-					 .catch(err => console.log(err))
-		    }
+			// if (results) {
+			// 	Users.update({linkedInId: req.params.id}, 
+			// 		 {$push: {denied: req.body.match}})
+			// 		 .then(result => res.send('success'))
+			// 		 .catch(err => console.log(err))
+		 //    }
 		})
 		 .catch(err => console.log(err))		 
 });
