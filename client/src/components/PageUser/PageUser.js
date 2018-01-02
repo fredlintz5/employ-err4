@@ -202,7 +202,9 @@ class PageUser extends Component {
 							</div>
 						</div>
 						<br />
-						<ModalSwipe data={this.state.matches}/>
+						<ModalSwipe data={this.state.matches}
+									thumbsUp={this.state.thumbsUp}
+									thumbsDown={this.state.thumbsDown}/>
 					</div>
 					<Footer />
 				</div>

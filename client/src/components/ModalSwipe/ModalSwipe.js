@@ -21,8 +21,8 @@ function ModalSwipe(props) {
 							<a onClick={() => props.thumbsUp()}><i className="fa fa-thumbs-up" aria-hidden="false"></i></a>
 						</div>
 						<div id="modal-text">
-							<p>{props.data[0] ? props.data[0].title.slice(0,35) : "Title Goes Here..."}</p>
-							<p>{props.data[0] ? props.data[0].bio.slice(0,35) : "Bio Goes Here..."}</p>
+							<p>{props.data[0] ? props.data[0].title.slice(0,35) : "YOU ARE OUT OF MATCHES"}</p>
+							<p>{props.data[0] ? props.data[0].bio.slice(0,35) : "GO GET SOME FRIENDS!"}</p>
 						</div>
 					</div>
 				</div>
