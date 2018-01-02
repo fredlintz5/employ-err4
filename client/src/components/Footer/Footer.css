@@ -3,6 +3,7 @@ footer {
 	background: linear-gradient(to right, #212529 , #EE5F46);
 	height: 100px;
 	position: relative;
+	margin: 0px;
 }
 
 footer h2 {
