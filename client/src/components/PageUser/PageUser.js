@@ -123,15 +123,20 @@ class PageUser extends Component {
 	searchMatches = () => {
 		let matchedIds = [];
 		let pendingIds = [];
+		let connectionIds = [];
 
 		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 ) {
 			matchedIds = this.state.userData.matches.map(match => match.linkedInId);
 			pendingIds = this.state.userData.pendingMatches.map(pending => pending.linkedInId);
+			connectionIds = this.state.userData.connections.map(connection => connection.linkedInId);
 			
+			console.log(connectionIds);
+
 			axios.put(`/api/users/employees/${this.state.id}`,
 				{
 					matchedIds: matchedIds,
-					pendingIds: pendingIds
+					pendingIds: pendingIds,
+					connectIds: connectionIds
 				})
 				 .then(result => {
 				 	if (result.data === 'success') {
