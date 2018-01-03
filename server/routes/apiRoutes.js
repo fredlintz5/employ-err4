@@ -57,7 +57,7 @@ router.put(`/users/thumbsup/:id/:type`, (req, res) => {
 			 .then(results => { 
 				if (results) {
 					Users.update({linkedInId: req.body.userData.pendingMatches[0].linkedInId},{
-							$pull: {pendingMatches: {linkedInId: req.body.userData.pendingMatches[0].linkedInId}},
+							$pull: {pendingMatches: {linkedInId: req.params.id}},
 							$push: {connections: req.body.userData}
 						 })
 						 .then(result => res.send('success'))
@@ -91,6 +91,7 @@ router.put(`/users/thumbsdown/:id`, (req, res) => {
 router.put('/users/employees/:id', (req, res) => {
 	Users.find({ $and : [
 			{linkedInId: {$nin: req.body.matchedIds}}, 
+			{linkedInId: {$nin: req.body.connectIds}}, 
 			{linkedInId: {$nin: req.body.pendingIds}}, 
 			{type: 'employee'}
 		 ]})
