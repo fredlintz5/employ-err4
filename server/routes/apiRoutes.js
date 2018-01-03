@@ -34,20 +34,38 @@ router.put(`/users/profile/:id`, (req, res) => {
 
 //thumbs up route
 router.put(`/users/thumbsup/:id/:type`, (req, res) => {
-	Users.update({linkedInId: req.params.id},{
-			 $pull: {matches: {linkedInId: req.body.userData.matches[0].linkedInId}}, 
-			 $push: {pendingMatches: req.body.userData.matches[0]}
-		 })
-		 .then(results => { 
-			if (results) {
-				Users.update({linkedInId: req.body.userData.matches[0].linkedInId},{
-						$push: {pendingMatches: req.body.userData}
-					 })
-					 .then(result => res.send('success'))
-					 .catch(err => console.log(err))
-		    }
-		 })
-		 .catch(err => console.log(err))	
+	if (req.params.type === "employer") {
+		Users.update({linkedInId: req.params.id},{
+				 $pull: {matches: {linkedInId: req.body.userData.matches[0].linkedInId}}, 
+				 $push: {pendingMatches: req.body.userData.matches[0]}
+			 })
+			 .then(results => { 
+				if (results) {
+					Users.update({linkedInId: req.body.userData.matches[0].linkedInId},{
+							$push: {pendingMatches: req.body.userData}
+						 })
+						 .then(result => res.send('success'))
+						 .catch(err => console.log(err))
+			    }
+			 })
+			 .catch(err => console.log(err))
+	} else if (req.params.type === "employee") {
+		Users.update({linkedInId: req.params.id},{
+				 $pull: {pendingMatches: {linkedInId: req.body.userData.pendingMatches[0].linkedInId}}, 
+				 $push: {connections: req.body.userData.pendingMatches[0]}
+			 })
+			 .then(results => { 
+				if (results) {
+					Users.update({linkedInId: req.body.userData.pendingMatches[0].linkedInId},{
+							$pull: {pendingMatches: {linkedInId: req.body.userData.pendingMatches[0].linkedInId}},
+							$push: {connections: req.body.userData}
+						 })
+						 .then(result => res.send('success'))
+						 .catch(err => console.log(err))
+			    }
+			 })
+			 .catch(err => console.log(err))
+	}
 });
 
 //thumbs down route
