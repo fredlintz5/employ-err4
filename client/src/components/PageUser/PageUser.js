@@ -102,7 +102,7 @@ class PageUser extends Component {
 	}
 
 	thumbsDown = () => {
-		axios.put(`/api/users/thumbsdown/${this.state.id}`,{match: this.state.userData.matches[0]})
+		axios.put(`/api/users/thumbsdown/${this.state.id}/${this.state.type}`,{userData: this.state.userData})
 			 .then(result => (
 			 	result.data === 'success' 
 				 	? this.getProfile() 
@@ -124,19 +124,21 @@ class PageUser extends Component {
 		let matchedIds = [];
 		let pendingIds = [];
 		let connectionIds = [];
+		let deniedIds = [];
 
-		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 ) {
+		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 || this.state.userData.connections.length > 0 || this.state.userData.denied.length > 0) {
+			
 			matchedIds = this.state.userData.matches.map(match => match.linkedInId);
 			pendingIds = this.state.userData.pendingMatches.map(pending => pending.linkedInId);
 			connectionIds = this.state.userData.connections.map(connection => connection.linkedInId);
-			
-			console.log(connectionIds);
+			deniedIds = this.state.userData.denied.map(denied => denied.linkedInId);
 
 			axios.put(`/api/users/employees/${this.state.id}`,
 				{
 					matchedIds: matchedIds,
 					pendingIds: pendingIds,
-					connectIds: connectionIds
+					connectIds: connectionIds,
+					deniedIds: deniedIds,
 				})
 				 .then(result => {
 				 	if (result.data === 'success') {
