@@ -46,9 +46,9 @@ class Card extends Component {
 					<span id="thumbsUp" style={pending && type === "employer" ? {display: "block"} : {display: "none"}}><i className="fa fa-thumbs-up" aria-hidden="false"></i></span>
 				</div>
 				<div className="col-lg-8" style={{padding: "10px 0px 0px 20px"}}>
-			    	<p>{displayName.slice(0, 35)}</p>
-			    	<p>{title.slice(0, 35)}</p>
-			    	<p>{bio.slice(0, 35)}</p>
+			    	<p>{displayName ? displayName.slice(0, 35) : "insert Display Name here..."}</p>
+			    	<p>{title ? title.slice(0, 35) : "insert Title here..."}</p>
+			    	<p>{bio ? bio.slice(0, 35) : "insert Bio here..."}</p>
 				</div>
 			</a>
 		)
