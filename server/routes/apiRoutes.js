@@ -26,11 +26,15 @@ router.put(`/users/type/:id`, (req, res) => {
 
 // update user profile input fields
 router.put(`/users/profile/:id`, (req, res) => {
+		console.log("hit the route" + req.body.email);
+
 	Users.update({linkedInId: req.params.id}, 
-			{ $set: { }})
+			{ $set: { email: req.body.email, title: req.body.title,  bio: req.body.bio }})
 		.then( results => res.send(results))
 		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
+
+
 
 //thumbs up route
 router.put(`/users/thumbsup/:id/:type`, (req, res) => {
