@@ -71,6 +71,10 @@ button {
     transition: margin-left ease .7s;
     transition: opacity ease .7s;
     padding: 20px;
+    background-image: url('../../img/city-wallpaper-47.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
