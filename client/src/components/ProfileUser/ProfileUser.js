@@ -24,11 +24,11 @@ class ProfileUser extends Component {
             <form>
               <div className="form-group input-group">
                 <div className="input-group-addon width82" >Title</div> 
-                <input className="form-control" type="text" placeholder={title || "Update your Title..."} />
+                <input className="form-control" type="text" id="employee-title" placeholder={title || "Update your Title..."} />
               </div>
               <div className="form-group input-group">
                 <div className="input-group-addon width82" >Email</div> 
-                <input className="form-control" type="text" placeholder={email || "Update your email..."} />
+                <input className="form-control" type="text" id="employee-email" placeholder={email || "Update your email..."} />
               </div>
               <div className="form-group input-group" style={{display: this.props.display === 'employee' ? 'none' : ""}}>
                 <div className="input-group-addon width82" >Website</div> 
@@ -36,7 +36,7 @@ class ProfileUser extends Component {
               </div>
               <div className="form-group input-group">
                 <div className="input-group-addon width82" >Bio</div> 
-                <textarea className="form-control" rows={3} placeholder={bio || "Insert Catchy Bio here..."}/>
+                <textarea className="form-control" rows={3} id="employee-bio" placeholder={bio || "Insert Catchy Bio here..."}/>
               </div>
             </form>
             <button className='btn btn-outline-secondary btn-block' type='button' onClick={() => this.props.update()}>Update Profile</button>

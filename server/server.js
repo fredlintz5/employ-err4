@@ -25,6 +25,13 @@ if (process.env.MONGODB_URI) {
 	mongoose.connect(databaseUri, {useMongoClient: true});
 }
 
+
+
+// mongoose.connect("mongodb://employer:test@ds157653.mlab.com:57653/linked-oauth"
+// , () => {
+// 	console.log('conencted to mongodb');
+// });
+
 mongoose.Promise = Promise;
 mongoose.set('debug', true);
 
