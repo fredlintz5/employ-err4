@@ -179,7 +179,7 @@ class PageUser extends Component {
 					  			     display={this.state.type}/>
 					</div>
 
-					<div className="container" id="main" style={{height: "auto", paddingTop: "75px"}}>
+					<div className="container-fluid" id="main" style={{height: "auto", paddingTop: "75px"}}>
 						<div className="text-center alert alert-dark" id="searchAlert">
 							<p>No New Matches Available...</p>
 						</div>
@@ -189,7 +189,7 @@ class PageUser extends Component {
 						<br style={(this.state.type === 'employee') ? {display: ""} : {display: "none"}} />
 						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
 							<div className="col-md-8 text-center" style={{paddingTop: "5px"}}>
-								<Dropdown textColor="black"/>
+								<Dropdown textColor="#ee5f46"/>
 							</div>
 							<div className="col-md-4 text-center" style={{marginBottom: '10px'}}>
 								<button className="btn searchButt" onClick={() => this.searchMatches()}>SEARCH</button>
