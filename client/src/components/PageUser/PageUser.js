@@ -54,18 +54,21 @@ class PageUser extends Component {
       let bio = document.getElementById('employee-bio').value || document.getElementById('employee-bio').placeholder;
       let title = document.getElementById('employee-title').value  || document.getElementById('employee-title').placeholder;
       let email = document.getElementById('employee-email').value || document.getElementById('employee-email').placeholder;
+      let website = document.getElementById('employee-website').value || document.getElementById('employee-website').placeholder;
       console.log(bio, title, email)
     //   if (bio !== "" && title !== "" && email !== "" ) {
         axios.put(`/api/users/profile/${this.state.id}`, {
           bio: bio,
           title: title,
-          email: email
+          email: email,
+          website: website
         })
         .then(response => {
           if (response.request.status === 200) {
           	document.getElementById('employee-bio').value = "";
           	document.getElementById('employee-title').value = "";
           	document.getElementById('employee-email').value = "";
+          	document.getElementById('employee-website').value = "";
             this.getProfile();
           }
         })
@@ -216,8 +219,6 @@ class PageUser extends Component {
 									type={this.state.type}
 									thumbsDown={this.thumbsDown}
 									thumbsUp={this.thumbsUp}/>
-						<a href="/">View Denied Users</a>
-						<a href="/">Un-deny All Denied Users</a>
 					</div>
 					<Footer hideText={this.state.id}/>
 				</div>
