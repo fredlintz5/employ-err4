@@ -32,7 +32,7 @@ class ProfileUser extends Component {
               </div>
               <div className="form-group input-group" style={{display: this.props.display === 'employee' ? 'none' : ""}}>
                 <div className="input-group-addon width82" >Website</div> 
-                <input className="form-control" type="text" placeholder={website || "Update your website url"} />
+                <input className="form-control" type="text" id="employee-website" placeholder={website || "Update your website url"} />
               </div>
               <div className="form-group input-group">
                 <div className="input-group-addon width82" >Bio</div> 

@@ -27,10 +27,10 @@ passport.use(new LinkedinStrategy({
 				// create a new user in our db 
 				new Users({
 					linkedInId: profile.id, 
-			        displayName: profile.displayName, 
-			        image: profile._json.pictureUrls.values[0], 
-			        title: profile._json.headline, 
-			        bio: profile._json.summary, 
+			        displayName: profile.displayName || "J-Wow", 
+			        image: profile._json.pictureUrls.values[0] || "https://tinyurl.com/ybgx3yx8", 
+			        title: profile._json.headline || "Insert headline here...", 
+			        bio: profile._json.summary || "Insert Bio Here...", 
 			        email: "", 
 			        website: "", 
 			        matches: [], 

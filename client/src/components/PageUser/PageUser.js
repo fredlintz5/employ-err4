@@ -54,18 +54,21 @@ class PageUser extends Component {
       let bio = document.getElementById('employee-bio').value || document.getElementById('employee-bio').placeholder;
       let title = document.getElementById('employee-title').value  || document.getElementById('employee-title').placeholder;
       let email = document.getElementById('employee-email').value || document.getElementById('employee-email').placeholder;
+      let website = document.getElementById('employee-website').value || document.getElementById('employee-website').placeholder;
       console.log(bio, title, email)
     //   if (bio !== "" && title !== "" && email !== "" ) {
         axios.put(`/api/users/profile/${this.state.id}`, {
           bio: bio,
           title: title,
-          email: email
+          email: email,
+          website: website
         })
         .then(response => {
           if (response.request.status === 200) {
           	document.getElementById('employee-bio').value = "";
           	document.getElementById('employee-title').value = "";
           	document.getElementById('employee-email').value = "";
+          	document.getElementById('employee-website').value = "";
             this.getProfile();
           }
         })
@@ -193,6 +196,7 @@ class PageUser extends Component {
 							</div>
 							<div className="col-md-4 text-center" style={{marginBottom: '10px'}}>
 								<button className="btn searchButt" onClick={() => this.searchMatches()}>SEARCH</button>
+								<button className="btn searchButt">Delete Matches</button>
 							</div>
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
