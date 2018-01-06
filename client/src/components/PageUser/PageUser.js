@@ -192,6 +192,7 @@ class PageUser extends Component {
 							</div>
 							<div className="col-md-4 text-center" style={{marginBottom: '10px'}}>
 								<button className="btn searchButt" onClick={() => this.searchMatches()}>SEARCH</button>
+								<button className="btn searchButt">Delete Matches</button>
 							</div>
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
@@ -214,6 +215,8 @@ class PageUser extends Component {
 									type={this.state.type}
 									thumbsDown={this.thumbsDown}
 									thumbsUp={this.thumbsUp}/>
+						<a href="/">View Denied Users</a>
+						<a href="/">Un-deny All Denied Users</a>
 					</div>
 					<Footer hideText={this.state.id}/>
 				</div>

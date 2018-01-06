@@ -6,6 +6,10 @@ button {
     cursor: pointer;
 }
 
+a {
+    cursor: pointer;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
