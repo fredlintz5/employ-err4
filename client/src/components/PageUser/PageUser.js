@@ -17,10 +17,8 @@ class PageUser extends Component {
 	state = {
 		type: "",
 		id: "",
-		allData: {},
-		matches: [],
-		connections: [],
-		denied: [],
+		userData: {},
+		navOpen: false
 	}
 
 	componentWillMount() {
@@ -39,16 +37,13 @@ class PageUser extends Component {
 	getProfile = () => {
 		let url = window.location.href.slice(27);
 
-		axios('/api/users/' + url)
+		axios('/api/users/user/' + url)
 		.then(res => {
 			if (res.data[0]) {
 				this.setState({
 					type: res.data[0].type,
 					id: res.data[0].linkedInId,
-					allData: res.data[0],
-					matches: res.data[0].matches,
-					connections: res.data[0].connections,
-					denied: res.data[0].denied
+					userData: res.data[0]
 				})
 			} else {console.log('no user yet')}
 		})
@@ -82,6 +77,9 @@ class PageUser extends Component {
 		document.getElementById("main").style.opacity = "0.15";
 		document.getElementById('main').style.pointerEvents = 'none';
 		document.getElementById('root').classList.add("stop-scrolling");
+		document.getElementById('caretDiv').style.transform ="rotate(-180deg)";
+		document.getElementById('caretDiv').style.left = "375px";
+		this.setState({navOpen: true})
 	}
 
 	closeNav = () => {
@@ -89,69 +87,135 @@ class PageUser extends Component {
 		document.getElementById("main").style.opacity = "1.0";
 		document.getElementById('main').style.pointerEvents = 'auto';
 		document.getElementById('root').classList.remove("stop-scrolling");
+		document.getElementById('caretDiv').style.transform = "rotate(0deg)";
+		document.getElementById('caretDiv').style.left = "0px";
+		this.setState({navOpen: false})
 	}
 
-	displayBreak = () => {
-		if (this.state.type === "" || this.state.type === 'employee') {		
-			return '';
+	thumbsUp = () => {
+		axios.put(`/api/users/thumbsup/${this.state.id}/${this.state.type}`, {userData: this.state.userData})
+			 .then(result => (
+			 	result.data === 'success' 
+				 	? this.getProfile() 
+				 	: console.log("shit didnt work")))
+			 .catch(err => console.log(err))
+	}
+
+	thumbsDown = () => {
+		axios.put(`/api/users/thumbsdown/${this.state.id}/${this.state.type}`,{userData: this.state.userData})
+			 .then(result => (
+			 	result.data === 'success' 
+				 	? this.getProfile() 
+				 	: console.log("shit didnt work")))
+			 .catch(err => console.log(err))
+	}
+
+	pendingClick = () => {
+		document.getElementById("pendingAlert").style.marginTop = "0px";
+ 		document.getElementById("pendingAlert").style.opacity = "1";
+ 		setTimeout(() => {
+ 			document.getElementById("pendingAlert").style.marginTop = "-73px";
+ 			document.getElementById("pendingAlert").style.opacity = "0";
+ 		}, 2000)
+	}
+
+
+	searchMatches = () => {
+		let matchedIds = [];
+		let pendingIds = [];
+		let connectionIds = [];
+		let deniedIds = [];
+
+		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 || this.state.userData.connections.length > 0 || this.state.userData.denied.length > 0) {
+			
+			matchedIds = this.state.userData.matches.map(match => match.linkedInId);
+			pendingIds = this.state.userData.pendingMatches.map(pending => pending.linkedInId);
+			connectionIds = this.state.userData.connections.map(connection => connection.linkedInId);
+			deniedIds = this.state.userData.denied.map(denied => denied.linkedInId);
+
+			axios.put(`/api/users/employees/${this.state.id}`,
+				{
+					matchedIds: matchedIds,
+					pendingIds: pendingIds,
+					connectIds: connectionIds,
+					deniedIds: deniedIds,
+				})
+				 .then(result => {
+				 	if (result.data === 'success') {
+				 		this.getProfile()
+				 	} else {
+				 		document.getElementById("searchAlert").style.marginTop = "0px";
+				 		document.getElementById("searchAlert").style.opacity = "1";
+				 		setTimeout(() => {
+				 			document.getElementById("searchAlert").style.marginTop = "-73px";
+				 			document.getElementById("searchAlert").style.opacity = "0";
+				 		}, 2000)
+				 	}
+				 })
+				 .catch(err => console.log(err))
+			
 		} else {
-			return "none";
+			axios.get(`/api/users/employees/${this.state.id}`)
+				 .then(result => (result.data === 'success') 
+				 	? this.getProfile()
+				 	: console.log("WTF?"))
+				 .catch(err => console.log(err))
 		}
 	}
-
-	displayRow = () => {
-		if (this.state.type === "" || this.state.type === 'employee') {		
-			return 'none';
-		} else {
-			return "";
-		}
-	}
-
-	thumbsUp
 
 	render () {
 		return (
 			<div>
 			{this.state.type === "" ? <Question setType={this.setUserType}/> : 
 				<div>
-					<Navigator openNav={this.openNav} none='none'/>
+					<Navigator openNav={this.openNav} closeNav={this.closeNav} navOpen={this.state.navOpen} none='none'/>
 
 					<div id="mySidenav" className="sidenav" style={{zIndex: "2000"}}>
-					  <a style={{color:"white"}} className="closebtn" onClick={() => this.closeNav()}>&times;</a>
-					  <ProfileUser data={this.state.allData} 
-					  			   update={this.updateProfile} 
-					  			   openNav={this.openNav} 
-					  			   closeNav={this.closeNav}
-					  			   display={this.state.type}/>
+					  	<ProfileUser data={this.state.userData} 
+					  			     update={this.updateProfile} 
+					  			     openNav={this.openNav} 
+					  			     closeNav={this.closeNav}
+					  			     display={this.state.type}/>
 					</div>
 
 					<div className="container" id="main" style={{height: "auto", paddingTop: "75px"}}>
-						<br style={{display: this.displayBreak()}} />
-						<div className="row" style={{display: this.displayRow()}}> 
+						<div className="text-center alert alert-dark" id="searchAlert">
+							<p>No New Matches Available...</p>
+						</div>
+						<div className="text-center alert alert-info" id="pendingAlert">
+							<p>Awaiting Match Approval by User...</p>
+						</div>
+						<br style={(this.state.type === 'employee') ? {display: ""} : {display: "none"}} />
+						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
 							<div className="col-md-8 text-center" style={{paddingTop: "5px"}}>
 								<Dropdown textColor="black"/>
 							</div>
 							<div className="col-md-4 text-center" style={{marginBottom: '10px'}}>
-								<button className="btn searchButt" data-toggle="modal" href='#employerModal'>SEARCH</button>
+								<button className="btn searchButt" onClick={() => this.searchMatches()}>SEARCH</button>
 							</div>
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
-							<div className="col-md-6">
-								<Matches data={this.state.matches} 
-										 employee='employers' 
+							<div className="col-md-6" style={{marginBottom: "25px"}}>
+								<Matches matches={this.state.userData.matches} 
+										 pendingMatches={this.state.userData.pendingMatches}
+										 type={this.state.type} 
 										 toggle="modal" 
-										 href='#swipeModal'/>
-							</div>
+										 href='modal'
+										 pendingClick={this.pendingClick}/>
+							</div>							
 							<div className="col-md-6">
-								<Connections data={this.state.connections} 
-											 toggle="" 
-											 href="mailto:"/>
+								<Connections data={this.state.userData.connections} 
+											 toggle="connections" 
+											 href="connections"/>
 							</div>
 						</div>
-						<br />
-						<ModalSwipe data={this.state.matches}/>
+						<ModalSwipe matches={this.state.userData.matches}
+									pendingMatches={this.state.userData.pendingMatches}
+									type={this.state.type}
+									thumbsDown={this.thumbsDown}
+									thumbsUp={this.thumbsUp}/>
 					</div>
-					<Footer />
+					<Footer hideText={this.state.id}/>
 				</div>
 			}
 			</div>

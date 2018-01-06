@@ -4,16 +4,22 @@
 	cursor: pointer;
 }
 
-#caret {
-	cursor: pointer;
-	position: absolute;
+#caretDiv {
+    cursor: pointer;
+    position: absolute;
     text-align: center;
-    line-height: 48px;
     left: 0px;
     top: 97px;
-    font-size: 25px;
     height: 50px;
     width: 20px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.0);
+    background-color: rgba(0,0,0,0.93);
+    transition: 0.5s;
+}
+
+#caret {
+	font-size: 25px;
+    line-height: 51px;
+    padding-left: 2px;
 }
     

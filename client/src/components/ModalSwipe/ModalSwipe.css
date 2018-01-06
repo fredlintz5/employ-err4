@@ -12,12 +12,32 @@ a {
 	width: 100%; 
 }
 
-#modal-text {
+#modal-text p {
+	margin-bottom: -5px;
+}
+
+#close {
+	color: white;
 	position: absolute;
-	bottom: 0;
-	left: auto;
-	right: auto;
+	right: 0px;
+	top: 0px;
+    padding: 0px 14px 8px 14px;
+    background-color: rgba(0,0,0,0.7);
+    font-size: 2em;
+    font-weight: 600;
+    text-shadow: none;
+    border: none;
+}
+
+#close:hover {
 	color: rgb(238, 95, 70);
+}
+
+.modal-footer {
+	display: block;
+	border: none;
+	color: rgb(238, 95, 70);
+	background-color: #1F2125;
 }
 
 .fa-thumbs-down {

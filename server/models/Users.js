@@ -13,10 +13,11 @@ const UserSchema = new Schema({
 	skills: [],
 	desiredSkills: [],
 	matches: [],
+	pendingMatches: [],
 	connections: [],
 	denied: [],
 	type: String,
-	wesbite: String
+	website: String
 });
 
 const Users = mongoose.model('users', UserSchema);

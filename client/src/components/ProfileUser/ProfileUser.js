@@ -11,7 +11,6 @@ class ProfileUser extends Component {
 
     return (
       <div className="container-fluid" style={{position: 'relative'}}>
-        <a className="closebtn" onClick={() => this.props.closeNav()} style={{color: "#F7F7F7"}}>&times;</a>
         <div className="row">
           <div className="col-lg-12" >
             <div className="text-center">

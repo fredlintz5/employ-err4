@@ -2,17 +2,44 @@ a:hover {
 	text-decoration: none;
 }
 
+#thumbsUp {
+	position: absolute;
+	left: -5px;
+    top: 35%;
+    height: 30px;
+    width: 30px;
+    border-radius: 6px;
+    background-color: #D2ECF1;
+    box-shadow: rgba(0,0,0,0.2) 0.5px 1px 0.2px;
+}
+
+#thumbsUp i {
+	color: #11545F;
+    font-size: 20px;
+    padding-top: 4px;
+    position: unset;
+}
+
+#thumbsUp:hover {
+	transform: scale(1.1)
+}
+
 .displayCard {
 	padding: 10px 0px 10px 15px;
-	border: 1px solid #DFDFDF;
+	border-bottom: 1px solid #DFDFDF;
 	cursor: pointer;
 	overflow: auto;
+	position: relative;
+	color: #f05f40 !important;
 }
 
 .displayCard img {
 	transition: all .3s;
 }
 
+.displayCard p {
+	margin-bottom: -5px;
+}
 
 .displayCard img:hover {
 	transform: scale(1.05);
