@@ -15,10 +15,9 @@ router.get(`/users/user/:id`, (req, res) => {
 
 // update profile page type
 router.put(`/users/type/:id`, (req, res) => {
-	Users.update({linkedInId: req.params.id}, 
-			{ $set: { 
-				type: req.body.type
-			}})
+	Users.update({linkedInId: req.params.id},{ 
+			$set: {type: req.body.type}
+		})
 		.then((results) => res.send(results))
 		.catch((err) => { 
 			res.status(500).send(err.message ? err.message : "Internal server blowup");
@@ -28,57 +27,121 @@ router.put(`/users/type/:id`, (req, res) => {
 // update user profile input fields
 router.put(`/users/profile/:id`, (req, res) => {
 	Users.update({linkedInId: req.params.id}, 
-			{ $set: { 
-				
-			}})
+			{ $set: { }})
 		.then( results => res.send(results))
 		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
 
 //thumbs up route
-router.put(`/users/thumbsup/:id`, (req, res) => {
-	Users.update({linkedInId: req.params.id},
-		{$pull: {matches: {linkedInId: req.body.match.linkedInId}}, 
-		 $push: {connections: req.body.match}})
-		 .then(results => { 
-		 	res.send('success');
-		 	console.log(results);
-			// if (results) {
-			// 	Users.update({linkedInId: req.body.match.linkedInId}, 
-			// 		 {$push: {matches: req.body.match}})
-			// 		 .then(result => res.send('success'))
-			// 		 .catch(err => console.log(err))
-		 //    }
-		})
-		 .catch(err => console.log(err))	
+router.put(`/users/thumbsup/:id/:type`, (req, res) => {
+	if (req.params.type === "employer") {
+		Users.update({linkedInId: req.params.id},{
+				 $pull: {matches: {linkedInId: req.body.userData.matches[0].linkedInId}}, 
+				 $push: {pendingMatches: req.body.userData.matches[0]}
+			 })
+			 .then(results => { 
+				if (results) {
+					let employerData = {
+						linkedInId: req.body.userData.linkedInId,
+		 				displayName: req.body.userData.displayName,
+		 				image: req.body.userData.image,
+		 				email: req.body.userData.email,
+		 				title: req.body.userData.title.slice(0,35),
+		 				bio: req.body.userData.bio.slice(0,35),
+		 				type: req.body.userData.type
+					}
+					Users.update({linkedInId: req.body.userData.matches[0].linkedInId},{
+							$push: {pendingMatches: employerData}
+						 })
+						 .then(result => res.send('success'))
+						 .catch(err => console.log(err))
+			    }
+			 })
+			 .catch(err => console.log(err))
+	} else if (req.params.type === "employee") {
+		Users.update({linkedInId: req.params.id},{
+				 $pull: {pendingMatches: {linkedInId: req.body.userData.pendingMatches[0].linkedInId}}, 
+				 $push: {connections: req.body.userData.pendingMatches[0]}
+			 })
+			 .then(results => { 
+				if (results) {
+					let employeeData = {
+						linkedInId: req.body.userData.linkedInId,
+		 				displayName: req.body.userData.displayName,
+		 				image: req.body.userData.image,
+		 				email: req.body.userData.email,
+		 				title: req.body.userData.title.slice(0,35),
+		 				bio: req.body.userData.bio.slice(0,35),
+		 				type: req.body.userData.type
+					}
+					Users.update({linkedInId: req.body.userData.pendingMatches[0].linkedInId},{
+							$pull: {pendingMatches: {linkedInId: req.params.id}},
+							$push: {connections: employeeData}})
+						 .then(result => res.send('success'))
+						 .catch(err => console.log(err))
+			    }
+			 })
+			 .catch(err => console.log(err))
+	}
 });
 
 //thumbs down route
-router.put(`/users/thumbsdown/:id`, (req, res) => {
-	Users.update({linkedInId: req.params.id},
-		{$pull: {matches: {linkedInId: req.body.match.linkedInId}}, 
-		 $push: {denied: req.body.match}})
-		 .then(results => { 
-		 	res.send('success');
-		 	console.log(results);
-		 	// console.log(results)
-			// if (results) {
-			// 	Users.update({linkedInId: req.params.id}, 
-			// 		 {$push: {denied: req.body.match}})
-			// 		 .then(result => res.send('success'))
-			// 		 .catch(err => console.log(err))
-		 //    }
-		})
-		 .catch(err => console.log(err))		 
+router.put(`/users/thumbsdown/:id/:type`, (req, res) => {
+	if (req.params.type === "employer") {
+		Users.update({linkedInId: req.params.id},
+			{$pull: {matches: {linkedInId: req.body.userData.matches[0].linkedInId}}, 
+			 $push: {denied: req.body.userData.matches[0]}})
+			 .then(results => res.send('success'))
+			 .catch(err => console.log(err))		
+	} else if (req.params.type === "employee") {
+		Users.update({linkedInId: req.params.id},
+			{$pull: {pendingMatches: {linkedInId: req.body.userData.pendingMatches[0].linkedInId}}, 
+			 $push: {denied: req.body.userData.pendingMatches[0]}})
+			 .then(results => {
+			 	if (results) {
+			 		let employerData = {
+						linkedInId: req.body.userData.linkedInId,
+		 				displayName: req.body.userData.displayName,
+		 				image: req.body.userData.image,
+		 				email: req.body.userData.email,
+		 				title: req.body.userData.title.slice(0,35),
+		 				bio: req.body.userData.bio.slice(0,35),
+		 				type: req.body.userData.type
+					}
+			 		Users.update({linkedInId: req.body.userData.pendingMatches[0].linkedInId}, {
+							 $pull: {pendingMatches: {linkedInId: req.params.id}}})
+			 			 .then(results => res.send('success'))
+			 			 .catch(err => console.log(err)) 
+			 	}
+			 })
+			 .catch(err => console.log(err)) 
+	}
 });
-
 
 // PUT ROUTE TO check against already existing linkedInId's in users matches array, and add any that aren't already there
 router.put('/users/employees/:id', (req, res) => {
-	Users.find({ $and : [{linkedInId: {$nin: req.body.linkedInArray}},{type: 'employee'}]})
+	Users.find({ $and : [
+			{linkedInId: {$nin: req.body.matchedIds}}, 
+			{linkedInId: {$nin: req.body.connectIds}}, 
+			{linkedInId: {$nin: req.body.pendingIds}}, 
+			{linkedInId: {$nin: req.body.deniedIds}}, 
+			{type: 'employee'}
+		 ]})
 		 .then(results => {
 		 	if (results.length > 0) {
-		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
+		 		let newArray = results.map(user => {
+		 			let matchedUser = {
+		 				linkedInId: user.linkedInId,
+		 				displayName: user.displayName,
+		 				image: user.image,
+		 				email: user.email,
+		 				title: user.title.slice(0,35),
+		 				bio: user.bio.slice(0,35),
+		 				type: user.type
+		 			}
+		 			return matchedUser;
+		 		})	
+		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: newArray}}})
 		 		 .then(result => res.send('success'))
 				 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 		 	} else res.send('no new results')
@@ -92,7 +155,19 @@ router.get('/users/employees/:id', (req, res) => {
 	Users.find({type: 'employee'})
 		 .then(results => {
 		 	if (results.length > 0) {
-		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: results}}})
+		 		let newArray = results.map(user => {
+		 			let matchedUser = {
+		 				linkedInId: user.linkedInId,
+		 				displayName: user.displayName,
+		 				image: user.image,
+		 				email: user.email,
+		 				title: user.title.slice(0,35),
+		 				bio: user.bio.slice(0,35),
+		 				type: user.type
+		 			}
+		 			return matchedUser;
+		 		})		 		
+		 		Users.update({linkedInId: req.params.id}, {$push: {matches: {$each: newArray}}})
 		 		 .then(result => res.send('success'))
 				 .catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 		 	}

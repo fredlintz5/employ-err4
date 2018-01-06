@@ -1,34 +1,41 @@
-import React from 'react';
+import React, {Component} from 'react';
+import ModalSwipeEmployee from './ModalSwipeEmployee';
+import ModalSwipeEmployer from './ModalSwipeEmployer';
 import "./ModalSwipe.css"
 
+	
 
+class ModalSwipe extends Component {
 
-function ModalSwipe(props) {
-	return (
-		<div className="modal fade" id="swipeModal" tabIndex="-1" role="dialog" aria-hidden="true">
-			<div className="modal-dialog" role="document">
-				<div className="modal-content">
-					<div className="modal-header">
-						<h5 className="modal-title" >{props.data[0] ? props.data[0].displayName.slice(0,35) : "YOU ARE OUT OF MATCHES"}</h5>
-						<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div className="modal-body">
-						<div id="modal-image">
-							<img src={props.data[0] ? props.data[0].image : "https://tinyurl.com/ybgx3yx8"} alt="Employer Modal"/>
-							<a style={props.data[0] ? {display: "block"} : {display: 'none'}} onClick={() => props.thumbsDown()}><i className="fa fa-thumbs-down" aria-hidden="false"></i></a>
-							<a style={props.data[0] ? {display: "block"} : {display: 'none'}} onClick={() => props.thumbsUp()}><i className="fa fa-thumbs-up" aria-hidden="false"></i></a>
-						</div>
-						<div id="modal-text">
-							<p>{props.data[0] ? props.data[0].title.slice(0,35) : "YOU ARE OUT OF MATCHES"}</p>
-							<p>{props.data[0] ? props.data[0].bio.slice(0,35) : "GO GET SOME FRIENDS!"}</p>
-						</div>
-					</div>
-				</div>
+	state = {
+		type: ""
+	}
+
+	componentWillMount() {
+		this.setState({type: this.props.type})
+	}
+
+	render() {
+		const {matches, pendingMatches, thumbsDown, thumbsUp, type} = this.props;
+		return (
+			<div>
+			{this.state.type === 'employer' 
+				?  <ModalSwipeEmployer 
+						matches={matches}
+						pendingMatches={pendingMatches}
+						type={type}
+						thumbsDown={thumbsDown}
+						thumbsUp={thumbsUp}/>
+				: <ModalSwipeEmployee 
+						matches={matches}
+						pendingMatches={pendingMatches}
+						type={type}
+						thumbsDown={thumbsDown}
+						thumbsUp={thumbsUp}/>
+			}
 			</div>
-		 </div>
-	)
+		)
+	}
 }
 
 export default ModalSwipe;

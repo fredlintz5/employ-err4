@@ -17,10 +17,7 @@ class PageUser extends Component {
 	state = {
 		type: "",
 		id: "",
-		allData: {},
-		matches: [],
-		connections: [],
-		denied: [],
+		userData: {},
 		navOpen: false
 	}
 
@@ -29,7 +26,7 @@ class PageUser extends Component {
 	}
 
 	setUserType = (type) => {
-		let url = window.location.href.slice(38); {/*27 for dev*/}
+		let url = window.location.href.slice(38);
 
 		this.setState({type: type});
 		axios.put(`/api/users/type/${url}`, {
@@ -38,7 +35,7 @@ class PageUser extends Component {
 	}
 
 	getProfile = () => {
-		let url = window.location.href.slice(38); {/*27 for dev*/}
+		let url = window.location.href.slice(38);
 
 		axios('/api/users/user/' + url)
 		.then(res => {
@@ -46,10 +43,7 @@ class PageUser extends Component {
 				this.setState({
 					type: res.data[0].type,
 					id: res.data[0].linkedInId,
-					allData: res.data[0],
-					matches: res.data[0].matches,
-					connections: res.data[0].connections,
-					denied: res.data[0].denied
+					userData: res.data[0]
 				})
 			} else {console.log('no user yet')}
 		})
@@ -98,24 +92,8 @@ class PageUser extends Component {
 		this.setState({navOpen: false})
 	}
 
-	displayBreak = () => {
-		if (this.state.type === "" || this.state.type === 'employee') {		
-			return '';
-		} else {
-			return "none";
-		}
-	}
-
-	displayRow = () => {
-		if (this.state.type === "" || this.state.type === 'employee') {		
-			return 'none';
-		} else {
-			return "";
-		}
-	}
-
 	thumbsUp = () => {
-		axios.put(`/api/users/thumbsup/${this.state.id}`,{match: this.state.matches[0]})
+		axios.put(`/api/users/thumbsup/${this.state.id}/${this.state.type}`, {userData: this.state.userData})
 			 .then(result => (
 			 	result.data === 'success' 
 				 	? this.getProfile() 
@@ -124,7 +102,7 @@ class PageUser extends Component {
 	}
 
 	thumbsDown = () => {
-		axios.put(`/api/users/thumbsdown/${this.state.id}`,{match: this.state.matches[0]})
+		axios.put(`/api/users/thumbsdown/${this.state.id}/${this.state.type}`,{userData: this.state.userData})
 			 .then(result => (
 			 	result.data === 'success' 
 				 	? this.getProfile() 
@@ -132,22 +110,44 @@ class PageUser extends Component {
 			 .catch(err => console.log(err))
 	}
 
+	pendingClick = () => {
+		document.getElementById("pendingAlert").style.marginTop = "0px";
+ 		document.getElementById("pendingAlert").style.opacity = "1";
+ 		setTimeout(() => {
+ 			document.getElementById("pendingAlert").style.marginTop = "-73px";
+ 			document.getElementById("pendingAlert").style.opacity = "0";
+ 		}, 2000)
+	}
+
 	searchMatches = () => {
 		let matchedIds = [];
+		let pendingIds = [];
+		let connectionIds = [];
+		let deniedIds = [];
 
-		if (this.state.matches.length > 0) {
-			matchedIds = this.state.matches.map(match => match.linkedInId);
+		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 || this.state.userData.connections.length > 0 || this.state.userData.denied.length > 0) {
 			
-			axios.put(`/api/users/employees/${this.state.id}`,{linkedInArray: matchedIds})
+			matchedIds = this.state.userData.matches.map(match => match.linkedInId);
+			pendingIds = this.state.userData.pendingMatches.map(pending => pending.linkedInId);
+			connectionIds = this.state.userData.connections.map(connection => connection.linkedInId);
+			deniedIds = this.state.userData.denied.map(denied => denied.linkedInId);
+
+			axios.put(`/api/users/employees/${this.state.id}`,
+				{
+					matchedIds: matchedIds,
+					pendingIds: pendingIds,
+					connectIds: connectionIds,
+					deniedIds: deniedIds,
+				})
 				 .then(result => {
 				 	if (result.data === 'success') {
 				 		this.getProfile()
 				 	} else {
-				 		document.getElementById("alert").style.marginTop = "0px";
-				 		document.getElementById("alert").style.opacity = "1";
+				 		document.getElementById("searchAlert").style.marginTop = "0px";
+				 		document.getElementById("searchAlert").style.opacity = "1";
 				 		setTimeout(() => {
-				 			document.getElementById("alert").style.marginTop = "-73px";
-				 			document.getElementById("alert").style.opacity = "0";
+				 			document.getElementById("searchAlert").style.marginTop = "-73px";
+				 			document.getElementById("searchAlert").style.opacity = "0";
 				 		}, 2000)
 				 	}
 				 })
@@ -170,7 +170,7 @@ class PageUser extends Component {
 					<Navigator openNav={this.openNav} closeNav={this.closeNav} navOpen={this.state.navOpen} none='none'/>
 
 					<div id="mySidenav" className="sidenav" style={{zIndex: "2000"}}>
-					  	<ProfileUser data={this.state.allData} 
+					  	<ProfileUser data={this.state.userData} 
 					  			     update={this.updateProfile} 
 					  			     openNav={this.openNav} 
 					  			     closeNav={this.closeNav}
@@ -178,11 +178,14 @@ class PageUser extends Component {
 					</div>
 
 					<div className="container" id="main" style={{height: "auto", paddingTop: "75px"}}>
-						<div className="text-center alert alert-dark" id="alert">
+						<div className="text-center alert alert-dark" id="searchAlert">
 							<p>No New Matches Available...</p>
 						</div>
-						<br style={{display: this.displayBreak()}} />
-						<div className="row" style={{display: this.displayRow()}}> 
+						<div className="text-center alert alert-info" id="pendingAlert">
+							<p>Awaiting Match Approval by User...</p>
+						</div>
+						<br style={(this.state.type === 'employee') ? {display: ""} : {display: "none"}} />
+						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
 							<div className="col-md-8 text-center" style={{paddingTop: "5px"}}>
 								<Dropdown textColor="black"/>
 							</div>
@@ -192,23 +195,26 @@ class PageUser extends Component {
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
 							<div className="col-md-6" style={{marginBottom: "25px"}}>
-								<Matches data={this.state.matches} 
-										 employee='employers' 
+								<Matches matches={this.state.userData.matches} 
+										 pendingMatches={this.state.userData.pendingMatches}
+										 type={this.state.type} 
 										 toggle="modal" 
-										 href='#swipeModal'/>
+										 href='modal'
+										 pendingClick={this.pendingClick}/>
 							</div>							
 							<div className="col-md-6">
-								<Connections data={this.state.connections} 
-											 toggle="" 
-											 href="mailto:"/>
+								<Connections data={this.state.userData.connections} 
+											 toggle="connections" 
+											 href="connections"/>
 							</div>
 						</div>
-						<br />
-						<ModalSwipe data={this.state.matches}
-									thumbsUp={this.thumbsUp}
-									thumbsDown={this.thumbsDown}/>
+						<ModalSwipe matches={this.state.userData.matches}
+									pendingMatches={this.state.userData.pendingMatches}
+									type={this.state.type}
+									thumbsDown={this.thumbsDown}
+									thumbsUp={this.thumbsUp}/>
 					</div>
-					<Footer />
+					<Footer hideText={this.state.id}/>
 				</div>
 			}
 			</div>

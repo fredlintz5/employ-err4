@@ -1,9 +1,6 @@
 import React from 'react';
 import './Navigator.css';
 
-// const loginURL = process.env.LOGIN_URL || "http://localhost:8080/auth/linkedin";
-// const logoutURL = process.env.LOGOUT_URL || "http://localhost:8080/auth/logout";
-
 
 function Navigator(props) {
 	return (
@@ -20,7 +17,7 @@ function Navigator(props) {
             <ul className="navbar-nav mr-auto"></ul>
             <ul className="navbar-nav nav-flex-icons">
               <li className="nav-item active">
-               <strong> <a className="nav-link" style={{display: props.none}} href="https://employ-err.herokuapp.com/auth/linkedin/callback" >Login</a></strong>
+                <strong> <a className="nav-link" style={{display: props.none}} href="https://employ-err.herokuapp.com/auth/linkedin/callback" >Login</a></strong>              
               </li>
               <li className="nav-item active">
                 <strong><a className="nav-link" style={{display: props.home}} 
