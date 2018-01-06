@@ -51,27 +51,28 @@ class PageUser extends Component {
 
 	updateProfile = () => {
 		console.log('will fix this later');
-      // let bio = document.getElementById('employee-bio').value;
-      // let title = document.getElementById('employee-title').value;
-      // let email = document.getElementById('employee-email').value;
-      // if (bio !== "" && title !== "" && email !== "" ) {
-      //   axios.put(`/api/users/${this.state.id}`, {
-      //     bio: bio,
-      //     title: title,
-      //     email: email
-      //   })
-      //   .then(response => {
-      //     if (response.request.status === 200) {
-      //     	document.getElementById('employee-bio').value = "";
-      //     	document.getElementById('employee-title').value = "";
-      //     	document.getElementById('employee-email').value = "";
-      //       this.getProfile();
-      //     }
-      //   })
-      //   .catch(error => console.log(error));
-      // } else console.log('input something to change dingus!');
-    }
-
+      let bio = document.getElementById('employee-bio').value || document.getElementById('employee-bio').placeholder;
+      let title = document.getElementById('employee-title').value  || document.getElementById('employee-title').placeholder;
+      let email = document.getElementById('employee-email').value || document.getElementById('employee-email').placeholder;
+      console.log(bio, title, email)
+    //   if (bio !== "" && title !== "" && email !== "" ) {
+        axios.put(`/api/users/profile/${this.state.id}`, {
+          bio: bio,
+          title: title,
+          email: email
+        })
+        .then(response => {
+          if (response.request.status === 200) {
+          	document.getElementById('employee-bio').value = "";
+          	document.getElementById('employee-title').value = "";
+          	document.getElementById('employee-email').value = "";
+            this.getProfile();
+          }
+        })
+        .catch(error => console.log(error));
+    //   } else console.log('input something to change dingus!');
+    // 
+}
 	openNav = () => {
 		document.getElementById("mySidenav").style.width = "375px";
 		document.getElementById("main").style.opacity = "0.15";
