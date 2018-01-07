@@ -6,6 +6,10 @@ button {
     cursor: pointer;
 }
 
+a {
+    cursor: pointer;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
@@ -25,20 +29,15 @@ button {
     transition: 0.5s;
 }
 
-/*.closebtn {
-    position: absolute;
-    cursor: pointer;
-    top: -40px;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-    z-index: 100;
-}*/
+.card {
+    opacity: 0.85;
+}
 
-.searchButt {
+.searchButtons {
     background-color: #EE5F46;
     cursor: pointer;
     color: white;
+    margin-right: 5px;
 }
 
 .width82 {
@@ -51,26 +50,22 @@ button {
     border: 1px solid #dd553e;
 }
 
-#searchAlert {
+.hiddenAlert {
     opacity: 0;
     margin-top: -73px;
     padding: 15px 0px 0px 0px;
     transition: opacity ease .7s, margin ease .7s;
 }
-
-#pendingAlert {
-    opacity: 0;
-    margin-top: -73px;
-    padding: 15px 0px 0px 0px;
-    transition: opacity ease .7s, margin ease .7s;
-}
-
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
     transition: margin-left ease .7s;
     transition: opacity ease .7s;
     padding: 20px;
+    background-image: url('../../img/city-wallpaper-47.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

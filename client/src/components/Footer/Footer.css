@@ -1,9 +1,10 @@
-footer {
+#footer {
 	/*background-color: #212529;*/
 	background: linear-gradient(to right, #212529 , #EE5F46);
 	height: 100px;
 	position: relative;
-	margin: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
 }
 
 footer h2 {
@@ -44,6 +45,5 @@ footer h3 {
 		bottom: 47px;
 	}
 }
-
 
 

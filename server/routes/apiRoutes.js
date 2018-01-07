@@ -26,11 +26,15 @@ router.put(`/users/type/:id`, (req, res) => {
 
 // update user profile input fields
 router.put(`/users/profile/:id`, (req, res) => {
+		console.log("hit the route" + req.body.email);
+
 	Users.update({linkedInId: req.params.id}, 
-			{ $set: { }})
+			{ $set: { email: req.body.email, title: req.body.title,  bio: req.body.bio, website: req.body.website }})
 		.then( results => res.send(results))
 		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
+
+
 
 //thumbs up route
 router.put(`/users/thumbsup/:id/:type`, (req, res) => {
@@ -150,6 +154,22 @@ router.put('/users/employees/:id', (req, res) => {
 });
 
 
+//delete matches 
+router.get('/users/user/matches/:id', (req, res) => {
+	Users.update({linkedInId: req.params.id}, {$set: {matches: []}})
+		 .then(result => {
+		 	if (result.nModified === 1) {
+		 		res.send('success')
+		 	} else if (result.nModified === 0) {
+		 		res.send('nothing to delete')
+		 	} else {
+		 		res.send('not sure what to do with this information...')	
+		 	}
+		 })
+		 .catch(err => console.log(err))
+})
+
+
 // Initial fetch for all users with type = 'employee', and add results to users matches
 router.get('/users/employees/:id', (req, res) => {
 	Users.find({type: 'employee'})
@@ -179,7 +199,6 @@ router.get('/users/employees/:id', (req, res) => {
 
 
 module.exports = router;
-
 
 
 
