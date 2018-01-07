@@ -21,5 +21,8 @@
     "build": "babel . --ignore node_modules,build --out-dir build",
     "start": "nodemon -r babel-register server.js",
     "start:prod": "node build/server.js"
+  }, 
+  "nodemonConfig": {
+    "ignore": ["node_modules"]
   }
 }

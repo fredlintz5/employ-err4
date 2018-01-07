@@ -1,9 +1,10 @@
 import React from 'react';
+import "../Dropdown/Dropdown.css"
 
 
 function Dropdown(props) {
 	return (
-		<form className="text-center" style={{color: props.textColor}}>
+		<form className="text-center" id="dropdown" style={{color: props.textColor}}>
 			<div className="form-check form-check-inline">
 			  <label className="form-check-label">
 			    <input 	className="form-check-input" 

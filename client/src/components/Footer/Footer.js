@@ -4,7 +4,7 @@ import "./Footer.css";
 
 function Footer(props) {
 	return (
-		<footer className="row">
+		<footer className="row" id="footer">
 			<h2 className="swipetext text-center">Swipe Now!</h2>
 			<h3 className="text-white" style={props.hideText ? {display: "none"} : {display: "block"}}>Login and start recruiting!</h3>
 		</footer>
