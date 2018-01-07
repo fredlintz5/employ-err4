@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-import ModalSwipe from '../ModalSwipe/ModalSwipe';
-import Question from '../Question/Question';
-import Matches from '../Matches/Matches';
+
 import Connections from '../Connections/Connections';
 import ProfileUser from '../ProfileUser/ProfileUser';
-import Dropdown from '../Dropdown/Dropdown';
+import ModalSwipe from '../ModalSwipe/ModalSwipe';
 import Navigator from '../Navigator/Navigator';
+import Question from '../Question/Question';
+import Dropdown from '../Dropdown/Dropdown';
+import Matches from '../Matches/Matches';
 import Footer from '../Footer/Footer';
-import "../PageUser/PageUser.css";
 import axios from 'axios';
 
+import "../PageUser/PageUser.css";
 
 
 class PageUser extends Component {
@@ -45,37 +46,38 @@ class PageUser extends Component {
 					id: res.data[0].linkedInId,
 					userData: res.data[0]
 				})
-			} else {console.log('no user yet')}
+			}
 		})
 	}
 
 	updateProfile = () => {
-		console.log('will fix this later');
-      let bio = document.getElementById('employee-bio').value || document.getElementById('employee-bio').placeholder;
-      let title = document.getElementById('employee-title').value  || document.getElementById('employee-title').placeholder;
-      let email = document.getElementById('employee-email').value || document.getElementById('employee-email').placeholder;
-      let website = document.getElementById('employee-website').value || document.getElementById('employee-website').placeholder;
-      console.log(bio, title, email)
-    //   if (bio !== "" && title !== "" && email !== "" ) {
-        axios.put(`/api/users/profile/${this.state.id}`, {
-          bio: bio,
-          title: title,
-          email: email,
-          website: website
-        })
-        .then(response => {
-          if (response.request.status === 200) {
-          	document.getElementById('employee-bio').value = "";
-          	document.getElementById('employee-title').value = "";
-          	document.getElementById('employee-email').value = "";
-          	document.getElementById('employee-website').value = "";
-            this.getProfile();
-          }
-        })
-        .catch(error => console.log(error));
-    //   } else console.log('input something to change dingus!');
-    // 
-}
+		let bio     = document.getElementById('employee-bio').value || 
+				  	  document.getElementById('employee-bio').placeholder;
+		let title   = document.getElementById('employee-title').value  || 
+					  document.getElementById('employee-title').placeholder;
+		let email   = document.getElementById('employee-email').value || 
+					  document.getElementById('employee-email').placeholder;
+		let website = document.getElementById('employee-website').value || 
+					  document.getElementById('employee-website').placeholder;
+
+		axios.put(`/api/users/profile/${this.state.id}`, {
+				bio: bio,
+				title: title,
+				email: email,
+				website: website
+				})
+			 .then(response => {
+				if (response.request.status === 200) {
+					document.getElementById('employee-bio').value = "";
+					document.getElementById('employee-title').value = "";
+					document.getElementById('employee-email').value = "";
+					document.getElementById('employee-website').value = "";
+				this.getProfile();
+				}
+			  })
+			 .catch(error => console.log(error));
+	}
+
 	openNav = () => {
 		document.getElementById("mySidenav").style.width = "375px";
 		document.getElementById("main").style.opacity = "0.15";
@@ -116,13 +118,28 @@ class PageUser extends Component {
 
 	pendingClick = () => {
 		document.getElementById("pendingAlert").style.marginTop = "0px";
- 		document.getElementById("pendingAlert").style.opacity = "1";
+ 		document.getElementById("pendingAlert").style.opacity = "0.8";
  		setTimeout(() => {
  			document.getElementById("pendingAlert").style.marginTop = "-73px";
  			document.getElementById("pendingAlert").style.opacity = "0";
  		}, 2000)
 	}
 
+	deleteMatches = () => {
+		axios(`/api/users/user/matches/${this.state.id}`)
+			 .then(result => {
+			 	if (result.data === "success") {
+			 		this.getProfile()
+			 	} else  if (result.data === "nothing to delete") {
+			 		document.getElementById("deleteAlert").style.marginTop = "0px";
+			 		document.getElementById("deleteAlert").style.opacity = "0.8";
+			 		setTimeout(() => {
+			 			document.getElementById("deleteAlert").style.marginTop = "-73px";
+			 			document.getElementById("deleteAlert").style.opacity = "0";
+			 		}, 2000)
+			 	}
+			 });
+	}
 
 	searchMatches = () => {
 		let matchedIds = [];
@@ -149,7 +166,7 @@ class PageUser extends Component {
 				 		this.getProfile()
 				 	} else {
 				 		document.getElementById("searchAlert").style.marginTop = "0px";
-				 		document.getElementById("searchAlert").style.opacity = "1";
+				 		document.getElementById("searchAlert").style.opacity = "0.8";
 				 		setTimeout(() => {
 				 			document.getElementById("searchAlert").style.marginTop = "-73px";
 				 			document.getElementById("searchAlert").style.opacity = "0";
@@ -183,24 +200,30 @@ class PageUser extends Component {
 					</div>
 
 					<div className="container-fluid" id="main" style={{height: "auto", paddingTop: "75px"}}>
-						<div className="text-center alert alert-dark" id="searchAlert">
+						<div className="text-center alert alert-info hiddenAlert" id="searchAlert">
 							<p>No New Matches Available...</p>
 						</div>
-						<div className="text-center alert alert-info" id="pendingAlert">
+						<div className="text-center alert alert-info hiddenAlert" id="pendingAlert">
 							<p>Awaiting Match Approval by User...</p>
+						</div>
+						<div className="text-center alert alert-info hiddenAlert" id="deleteAlert">
+							<p>No more matches to delete...</p>
 						</div>
 						<br style={(this.state.type === 'employee') ? {display: ""} : {display: "none"}} />
 						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
-							<div className="col-md-8 text-center" style={{paddingTop: "5px"}}>
+							<div className="col-md-1"></div>
+							<div className="col-md-5 text-center" style={{paddingTop: "5px"}}>
 								<Dropdown textColor="#ee5f46"/>
 							</div>
-							<div className="col-md-4 text-center" style={{marginBottom: '10px'}}>
-								<button className="btn searchButt" onClick={() => this.searchMatches()}>SEARCH</button>
-								<button className="btn searchButt">Delete Matches</button>
+							<div className="col-md-5 text-center" style={{marginBottom: '10px'}}>
+								<button className="btn searchButtons" onClick={() => this.searchMatches()}>SEARCH</button>
+								<button className="btn searchButtons" onClick={() => this.deleteMatches()}>DELETE</button>
 							</div>
+							<div className="col-md-1"></div>
 						</div>
 						<div className='row' style={{marginBottom: "25vh"}}>
-							<div className="col-md-6" style={{marginBottom: "25px"}}>
+							<div className="col-md-1"></div>
+							<div className="col-md-5" style={{marginBottom: "25px"}}>
 								<Matches matches={this.state.userData.matches} 
 										 pendingMatches={this.state.userData.pendingMatches}
 										 type={this.state.type} 
@@ -208,11 +231,12 @@ class PageUser extends Component {
 										 href='modal'
 										 pendingClick={this.pendingClick}/>
 							</div>							
-							<div className="col-md-6">
+							<div className="col-md-5">
 								<Connections data={this.state.userData.connections} 
 											 toggle="connections" 
 											 href="connections"/>
 							</div>
+							<div className="col-md-1"></div>
 						</div>
 						<ModalSwipe matches={this.state.userData.matches}
 									pendingMatches={this.state.userData.pendingMatches}

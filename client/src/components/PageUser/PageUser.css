@@ -29,20 +29,15 @@ a {
     transition: 0.5s;
 }
 
-/*.closebtn {
-    position: absolute;
-    cursor: pointer;
-    top: -40px;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-    z-index: 100;
-}*/
+.card {
+    opacity: 0.85;
+}
 
-.searchButt {
+.searchButtons {
     background-color: #EE5F46;
     cursor: pointer;
     color: white;
+    margin-right: 5px;
 }
 
 .width82 {
@@ -55,20 +50,12 @@ a {
     border: 1px solid #dd553e;
 }
 
-#searchAlert {
+.hiddenAlert {
     opacity: 0;
     margin-top: -73px;
     padding: 15px 0px 0px 0px;
     transition: opacity ease .7s, margin ease .7s;
 }
-
-#pendingAlert {
-    opacity: 0;
-    margin-top: -73px;
-    padding: 15px 0px 0px 0px;
-    transition: opacity ease .7s, margin ease .7s;
-}
-
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
