@@ -200,14 +200,26 @@ class PageUser extends Component {
 					</div>
 
 					<div className="container-fluid" id="main" style={{height: "auto", paddingTop: "75px"}}>
-						<div className="text-center alert alert-info hiddenAlert" id="searchAlert">
-							<p>No New Matches Available...</p>
+						<div className="row">
+							<div className="col-md-1"></div>
+							<div className="col-md-10 text-center alert alert-info hiddenAlert" id="searchAlert">
+								<p>No New Matches Available...</p>
+							</div>
+							<div className="col-md-1"></div>
 						</div>
-						<div className="text-center alert alert-info hiddenAlert" id="pendingAlert">
-							<p>Awaiting Match Approval by User...</p>
+						<div className="row">
+							<div className="col-md-1"></div>
+							<div className="col-md-10 text-center alert alert-info hiddenAlert" id="pendingAlert">
+								<p>Awaiting Match Approval by User...</p>
+							</div>
+							<div className="col-md-1"></div>
 						</div>
-						<div className="text-center alert alert-info hiddenAlert" id="deleteAlert">
-							<p>No more matches to delete...</p>
+						<div className="row">
+							<div className="col-md-1"></div>
+							<div className="col-md-10 text-center alert alert-info hiddenAlert" id="deleteAlert">
+								<p>No more matches to delete...</p>
+							</div>
+							<div className="col-md-1"></div>
 						</div>
 						<br style={(this.state.type === 'employee') ? {display: ""} : {display: "none"}} />
 						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
