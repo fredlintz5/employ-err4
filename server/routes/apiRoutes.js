@@ -4,7 +4,7 @@ import Users from '../models/Users';
 const router = express.Router();
 
 
-// return specific employee's database info for populating data in login page
+// return specific user's database info for populating data in login page
 router.get(`/users/user/:id`, (req, res) => {
 	Users.find({linkedInId: req.params.id})
 		.then(results => res.send(results))
@@ -18,7 +18,7 @@ router.put(`/users/type/:id`, (req, res) => {
 	Users.update({linkedInId: req.params.id},{ 
 			$set: {type: req.body.type}
 		})
-		.then((results) => res.send(results))
+		.then((results) => res.send('success'))
 		.catch((err) => { 
 			res.status(500).send(err.message ? err.message : "Internal server blowup");
 		})
@@ -33,8 +33,6 @@ router.put(`/users/profile/:id`, (req, res) => {
 		.then( results => res.send(results))
 		.catch( err => res.status(500).send(err.message ? err.message : "Internal server blowup"))
 });
-
-
 
 //thumbs up route
 router.put(`/users/thumbsup/:id/:type`, (req, res) => {
@@ -122,7 +120,7 @@ router.put(`/users/thumbsdown/:id/:type`, (req, res) => {
 	}
 });
 
-// PUT ROUTE TO check against already existing linkedInId's in users matches array, and add any that aren't already there
+// searchMatches route to check against already existing linkedInId's in users matches array, and add any that aren't already there
 router.put('/users/employees/:id', (req, res) => {
 	Users.find({ $and : [
 			{linkedInId: {$nin: req.body.matchedIds}}, 
@@ -170,7 +168,7 @@ router.get('/users/user/matches/:id', (req, res) => {
 })
 
 
-// Initial fetch for all users with type = 'employee', and add results to users matches
+// initial searchMatches route to return all users with type = 'employee', and add results to users matches
 router.get('/users/employees/:id', (req, res) => {
 	Users.find({type: 'employee'})
 		 .then(results => {

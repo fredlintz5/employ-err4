@@ -4,6 +4,9 @@ import './Cards.css';
 
 class Card extends Component {	
 
+	// jquery-like shorthand for replacing document.getElementById
+	byId = (id) => document.getElementById(id)
+
 	setToggle = (toggle, type) => {
 		if (toggle === "modal" && type === "employer") {
 			return "modal"
@@ -28,9 +31,14 @@ class Card extends Component {
 		}
 	}
 
-	setOnClick = (boolean, type) => {
+	pendingClick = (boolean, type) => {
 		if (boolean === true && type === "employer") {
-			this.props.pendingClick()
+			this.byId("pendingAlert").style.marginTop = "0px";
+	 		this.byId("pendingAlert").style.opacity = "0.8";
+	 		setTimeout(() => {
+	 			this.byId("pendingAlert").style.marginTop = "-73px";
+	 			this.byId("pendingAlert").style.opacity = "0";
+	 		}, 2000)
 		}
 	}
 
@@ -40,7 +48,7 @@ class Card extends Component {
 			<a className="row displayCard" data-toggle={this.setToggle(toggle, type)} 
 										   href={this.setHref(href, type)}
 										   data-linkedinid={linkedInId}
-										   onClick={() => this.setOnClick(pending, type)}>
+										   onClick={() => this.pendingClick(pending, type)}>
 				<div className="col-lg-4 text-center" style={{paddingLeft: "10px"}}>
 					<img src={image} alt="user" height="70px" style={{borderRadius: "100%"}}/>
 					<span id="thumbsUp" style={pending && type === "employer" ? {display: "block"} : {display: "none"}}><i className="fa fa-thumbs-up" aria-hidden="false"></i></span>

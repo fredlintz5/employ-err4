@@ -1,9 +1,44 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+
+import Dropdown from '../Dropdown/Dropdown';
+
 import "./../PageUser/PageUser.css"
 
 
 
 class ProfileUser extends Component {
+
+  // jquery-like shorthand for replacing document.getElementById
+  byId = (id) => document.getElementById(id)
+
+  updateProfile = () => {
+    let bio     = this.byId('employee-bio').value || 
+                  this.byId('employee-bio').placeholder;
+    let title   = this.byId('employee-title').value  || 
+                  this.byId('employee-title').placeholder;
+    let email   = this.byId('employee-email').value || 
+                  this.byId('employee-email').placeholder;
+    let website = this.byId('employee-website').value || 
+                  this.byId('employee-website').placeholder;
+
+    axios.put(`/api/users/profile/${this.props.data.linkedInId}`, {
+          bio: bio,
+          title: title,
+          email: email,
+          website: website
+        })
+       .then(response => {
+          if (response.request.status === 200) {
+            this.byId('employee-bio').value = "";
+            this.byId('employee-title').value = "";
+            this.byId('employee-email').value = "";
+            this.byId('employee-website').value = "";
+            this.props.getProfile();
+          }
+        })
+       .catch(error => console.log(error));
+  }
 
   render() {
 
@@ -39,7 +74,8 @@ class ProfileUser extends Component {
                 <textarea className="form-control" rows={3} id="employee-bio" placeholder={bio || "Insert Catchy Bio here..."}/>
               </div>
             </form>
-            <button className='btn btn-outline-secondary btn-block' type='button' onClick={() => this.props.update()}>Update Profile</button>
+            <Dropdown location="ProfileUser"/>
+            <button className='btn btn-outline-secondary btn-block' type='button' onClick={() => this.updateProfile()}>Update Profile</button>
          </div>
       </div>
     </div>
