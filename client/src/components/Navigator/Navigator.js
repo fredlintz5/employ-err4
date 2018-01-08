@@ -1,9 +1,6 @@
 import React from 'react';
 import './Navigator.css';
 
-// const loginURL = process.env.LOGIN_URL || "http://localhost:8080/auth/linkedin";
-// const logoutURL = process.env.LOGOUT_URL || "http://localhost:8080/auth/logout";
-
 
 function Navigator(props) {
 	return (
@@ -14,7 +11,7 @@ function Navigator(props) {
           </button>
           <div id="caretDiv" style={{display: props.home}}>  
             <i  className={`fa fa-caret-right text-primary ${props.hide}`} id="caret" 
-                onClick={() => props.navOpen ? props.closeNav() : props.openNav()}/>
+                onClick={() => props.toggleNav(props.navOpen)}/>
           </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto"></ul>
@@ -24,7 +21,7 @@ function Navigator(props) {
               </li>
               <li className="nav-item active">
                 <strong><a className="nav-link" style={{display: props.home}} 
-                            onClick={() => props.navOpen ? props.closeNav() : props.openNav()}>Profile</a></strong>
+                            onClick={() => props.toggleNav(props.navOpen)}>Profile</a></strong>
               </li>
               <li className="nav-item active">
                 <strong><a className="nav-link" style={{display: props.home}} href='/' >Logout</a></strong>

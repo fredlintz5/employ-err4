@@ -14,15 +14,17 @@
     "mongoose": "^4.13.7"
   },
   "devDependencies": {
-    "babel-register": "^6.22.0",
+    "babel-register": "^6.26.0",
     "nodemon": "^1.11.0"
   },
   "scripts": {
     "build": "babel . --ignore node_modules,build --out-dir build",
     "start": "nodemon -r babel-register server.js",
     "start:prod": "node build/server.js"
-  }, 
+  },
   "nodemonConfig": {
-    "ignore": ["node_modules"]
+    "ignore": [
+      "node_modules"
+    ]
   }
 }

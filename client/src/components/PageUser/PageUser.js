@@ -19,134 +19,80 @@ class PageUser extends Component {
 		type: "",
 		id: "",
 		userData: {},
-		navOpen: false
+		profileOpen: false
 	}
 
+	// grab all data about user before component mounts
 	componentWillMount() {
 		this.getProfile();
 	}
 
-	setUserType = (type) => {
-		let url = window.location.href.slice(27);
+	// jquery-like shorthand for replacing document.getElementById
+	byId = (id) => document.getElementById(id)
 
-		this.setState({type: type});
-		axios.put(`/api/users/type/${url}`, {
-          type: type
-        })
-	}
-
+	// get user's profile data please...
 	getProfile = () => {
-		let url = window.location.href.slice(27);
-
-		axios('/api/users/user/' + url)
-		.then(res => {
-			if (res.data[0]) {
-				this.setState({
-					type: res.data[0].type,
-					id: res.data[0].linkedInId,
-					userData: res.data[0]
-				})
-			}
-		})
-	}
-
-	updateProfile = () => {
-		let bio     = document.getElementById('employee-bio').value || 
-				  	  document.getElementById('employee-bio').placeholder;
-		let title   = document.getElementById('employee-title').value  || 
-					  document.getElementById('employee-title').placeholder;
-		let email   = document.getElementById('employee-email').value || 
-					  document.getElementById('employee-email').placeholder;
-		let website = document.getElementById('employee-website').value || 
-					  document.getElementById('employee-website').placeholder;
-
-		axios.put(`/api/users/profile/${this.state.id}`, {
-				bio: bio,
-				title: title,
-				email: email,
-				website: website
-				})
-			 .then(response => {
-				if (response.request.status === 200) {
-					document.getElementById('employee-bio').value = "";
-					document.getElementById('employee-title').value = "";
-					document.getElementById('employee-email').value = "";
-					document.getElementById('employee-website').value = "";
-				this.getProfile();
+		axios.get('/api/users/user/' + window.location.href.slice(27))
+			 .then(res => {
+				if (res.data[0]) {
+					this.setState({
+						type: res.data[0].type,
+						id: res.data[0].linkedInId,
+						userData: res.data[0]
+					})
 				}
-			  })
-			 .catch(error => console.log(error));
+			})
 	}
 
-	openNav = () => {
-		document.getElementById("mySidenav").style.width = "375px";
-		document.getElementById("main").style.opacity = "0.15";
-		document.getElementById('main').style.pointerEvents = 'none';
-		document.getElementById('root').classList.add("stop-scrolling");
-		document.getElementById('caretDiv').style.transform ="rotate(-180deg)";
-		document.getElementById('caretDiv').style.left = "375px";
-		this.setState({navOpen: true})
+	// depending on state of profileOpen, toggle side-profile open or closed
+	// this function is used in the Navigator and ProfileUser
+	toggleNav = (state) => {
+		if (state === false) {
+			this.byId("mySidenav").style.width = "375px";
+			this.byId("main").style.opacity = "0.15";
+			this.byId('main').style.pointerEvents = 'none';
+			this.byId('root').classList.add("stop-scrolling");
+			this.byId('caretDiv').style.transform ="rotate(-540deg)";
+			this.byId('caretDiv').style.left = "375px";
+			this.setState({profileOpen: true})
+		} else {
+			this.byId("mySidenav").style.width = "0px";
+			this.byId("main").style.opacity = "1.0";
+			this.byId('main').style.pointerEvents = 'auto';
+			this.byId('root').classList.remove("stop-scrolling");
+			this.byId('caretDiv').style.transform = "rotate(0deg)";
+			this.byId('caretDiv').style.left = "0px";
+			this.setState({profileOpen: false})
+		}
+		
 	}
 
-	closeNav = () => {
-		document.getElementById("mySidenav").style.width = "0px";
-		document.getElementById("main").style.opacity = "1.0";
-		document.getElementById('main').style.pointerEvents = 'auto';
-		document.getElementById('root').classList.remove("stop-scrolling");
-		document.getElementById('caretDiv').style.transform = "rotate(0deg)";
-		document.getElementById('caretDiv').style.left = "0px";
-		this.setState({navOpen: false})
-	}
-
-	thumbsUp = () => {
-		axios.put(`/api/users/thumbsup/${this.state.id}/${this.state.type}`, {userData: this.state.userData})
-			 .then(result => (
-			 	result.data === 'success' 
-				 	? this.getProfile() 
-				 	: console.log("shit didnt work")))
-			 .catch(err => console.log(err))
-	}
-
-	thumbsDown = () => {
-		axios.put(`/api/users/thumbsdown/${this.state.id}/${this.state.type}`,{userData: this.state.userData})
-			 .then(result => (
-			 	result.data === 'success' 
-				 	? this.getProfile() 
-				 	: console.log("shit didnt work")))
-			 .catch(err => console.log(err))
-	}
-
-	pendingClick = () => {
-		document.getElementById("pendingAlert").style.marginTop = "0px";
- 		document.getElementById("pendingAlert").style.opacity = "0.8";
- 		setTimeout(() => {
- 			document.getElementById("pendingAlert").style.marginTop = "-73px";
- 			document.getElementById("pendingAlert").style.opacity = "0";
- 		}, 2000)
-	}
-
+	// delete current searchMatches results
 	deleteMatches = () => {
-		axios(`/api/users/user/matches/${this.state.id}`)
+		axios.get(`/api/users/user/matches/${this.state.id}`)
 			 .then(result => {
 			 	if (result.data === "success") {
 			 		this.getProfile()
 			 	} else  if (result.data === "nothing to delete") {
-			 		document.getElementById("deleteAlert").style.marginTop = "0px";
-			 		document.getElementById("deleteAlert").style.opacity = "0.8";
+			 		this.byId("deleteAlert").style.marginTop = "0px";
+			 		this.byId("deleteAlert").style.opacity = "0.8";
 			 		setTimeout(() => {
-			 			document.getElementById("deleteAlert").style.marginTop = "-73px";
-			 			document.getElementById("deleteAlert").style.opacity = "0";
+			 			this.byId("deleteAlert").style.marginTop = "-73px";
+			 			this.byId("deleteAlert").style.opacity = "0";
 			 		}, 2000)
 			 	}
 			 });
 	}
 
+	// return potential employee matches for the employer
 	searchMatches = () => {
 		let matchedIds = [];
 		let pendingIds = [];
 		let connectionIds = [];
 		let deniedIds = [];
 
+		// if any of these arrays already have data, provide search results that take that data into consideration
+		// ie - we dont want to return users in the search that have already been denied, pending or connected
 		if (this.state.userData.matches.length > 0 || this.state.userData.pendingMatches.length > 0 || this.state.userData.connections.length > 0 || this.state.userData.denied.length > 0) {
 			
 			matchedIds = this.state.userData.matches.map(match => match.linkedInId);
@@ -165,21 +111,23 @@ class PageUser extends Component {
 				 	if (result.data === 'success') {
 				 		this.getProfile()
 				 	} else {
-				 		document.getElementById("searchAlert").style.marginTop = "0px";
-				 		document.getElementById("searchAlert").style.opacity = "0.8";
+				 		// toggle the searchAlert div, letting employer know, there are no new search results
+				 		this.byId("searchAlert").style.marginTop = "0px";
+				 		this.byId("searchAlert").style.opacity = "0.8";
 				 		setTimeout(() => {
-				 			document.getElementById("searchAlert").style.marginTop = "-73px";
-				 			document.getElementById("searchAlert").style.opacity = "0";
+				 			this.byId("searchAlert").style.marginTop = "-73px";
+				 			this.byId("searchAlert").style.opacity = "0";
 				 		}, 2000)
 				 	}
 				 })
 				 .catch(err => console.log(err))
 			
 		} else {
+			// return all possible employees
 			axios.get(`/api/users/employees/${this.state.id}`)
 				 .then(result => (result.data === 'success') 
 				 	? this.getProfile()
-				 	: console.log("WTF?"))
+				 	: console.log("Something wrong with the searchMatches function"))
 				 .catch(err => console.log(err))
 		}
 	}
@@ -187,15 +135,14 @@ class PageUser extends Component {
 	render () {
 		return (
 			<div>
-			{this.state.type === "" ? <Question setType={this.setUserType}/> : 
+			{this.state.type === "" ? <Question getProfile={this.getProfile}/> : 
 				<div>
-					<Navigator openNav={this.openNav} closeNav={this.closeNav} navOpen={this.state.navOpen} none='none'/>
+					<Navigator toggleNav={this.toggleNav} navOpen={this.state.profileOpen} none='none'/>
 
 					<div id="mySidenav" className="sidenav" style={{zIndex: "2000"}}>
 					  	<ProfileUser data={this.state.userData} 
-					  			     update={this.updateProfile} 
-					  			     openNav={this.openNav} 
-					  			     closeNav={this.closeNav}
+					  			     update={this.updateProfile}
+					  			     getProfile={this.getProfile} 
 					  			     display={this.state.type}/>
 					</div>
 
@@ -225,7 +172,7 @@ class PageUser extends Component {
 						<div className="row" style={(this.state.type === 'employee') ? {display: "none"} : {display: ""}}> 
 							<div className="col-md-1"></div>
 							<div className="col-md-5 text-center" style={{paddingTop: "5px"}}>
-								<Dropdown textColor="#ee5f46"/>
+								<Dropdown location="employerSearch"/>
 							</div>
 							<div className="col-md-5 text-center" style={{marginBottom: '10px'}}>
 								<button className="btn searchButtons" onClick={() => this.searchMatches()}>SEARCH</button>
@@ -236,27 +183,21 @@ class PageUser extends Component {
 						<div className='row' style={{marginBottom: "25vh"}}>
 							<div className="col-md-1"></div>
 							<div className="col-md-5" style={{marginBottom: "25px"}}>
-								<Matches matches={this.state.userData.matches} 
-										 pendingMatches={this.state.userData.pendingMatches}
-										 type={this.state.type} 
+								<Matches userData={this.state.userData}  
 										 toggle="modal" 
-										 href='modal'
-										 pendingClick={this.pendingClick}/>
+										 href='modal'/>
 							</div>							
 							<div className="col-md-5">
-								<Connections data={this.state.userData.connections} 
+								<Connections userData={this.state.userData} 
 											 toggle="connections" 
 											 href="connections"/>
 							</div>
 							<div className="col-md-1"></div>
 						</div>
-						<ModalSwipe matches={this.state.userData.matches}
-									pendingMatches={this.state.userData.pendingMatches}
-									type={this.state.type}
-									thumbsDown={this.thumbsDown}
-									thumbsUp={this.thumbsUp}/>
+						<ModalSwipe userData={this.state.userData}
+									getProfile={this.getProfile}/>
 					</div>
-					<Footer hideText={this.state.id}/>
+					<Footer hideText={true}/>
 				</div>
 			}
 			</div>
@@ -268,8 +209,5 @@ class PageUser extends Component {
 
 
 export default PageUser;
-
-
-
 
 
