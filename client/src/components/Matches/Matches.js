@@ -2,7 +2,8 @@ import React from 'react';
 
 import Card from '../Card/Card';
 
-
+	//matched card that shows matched based off employer search, requested connections from employers for employees, and potential employees awaiting approval
+	
 function Matches(props) {
 	return (
 		<div className="card" style={{width: "100%", height: "70vh", boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)"}}>

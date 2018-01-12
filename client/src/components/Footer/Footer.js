@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Footer.css";
 
-
+	// footer rendered on every page
 function Footer(props) {
 	return (
 		<footer className="row" id="footer">

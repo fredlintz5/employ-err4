@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../Card/Card';
 
-
+	//connections between employer and employee after both give the thumbs up
 function Connections(props) {
 	return (
 		<div className="card" style={{width: "100%", height: "70vh", boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)"}}>

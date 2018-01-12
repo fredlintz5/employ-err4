@@ -1,6 +1,6 @@
 import React from "react";
 
-
+	//pop up modal on employers page to view and thumb up or daown potential candidates
 function ModalSwipeEmployer(props) {
 		return (
 			<div className="modal fade" id="swipeModal" tabIndex="-1" role="dialog" aria-hidden="true">
