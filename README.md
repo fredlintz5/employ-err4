@@ -6,10 +6,10 @@
 ![](readme-img/homepage.png)
 
 ## User Page
-![](read-me/userpage.png)
+![](readme-img/userpage.png)
 
 ## Profile
-![](read-me/profile.png)
+![](readme-img/profile.png)
 
 
 
