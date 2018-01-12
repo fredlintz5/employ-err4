@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navigator.css';
 
-
+  
 function Navigator(props) {
 	return (
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark scrolling-navbar">

@@ -1,6 +1,6 @@
 import React from "react";
 
-
+	//pop up on employee page to review interested employers and approve connection or decline connection
 function ModalSwipeEmployee(props) {
 		return (
 			<div className="modal fade" id="swipeModal" tabIndex="-1" role="dialog" aria-hidden="true">

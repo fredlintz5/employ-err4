@@ -18,7 +18,7 @@ class Card extends Component {
 			return ""
 		}
 	}
-
+		//differnt modal shown for employee vs employers
 	setHref = (href, type) => {
 		if (href === "modal" && type === "employer") {
 			return "#swipeModal"
@@ -30,7 +30,7 @@ class Card extends Component {
 			return `mailto:${this.props.email}?Subject=Employerr%20App%20Connection`
 		}
 	}
-
+		// employer ok a candidate and waits for the candidate to approve or deny
 	pendingClick = (boolean, type) => {
 		if (boolean === true && type === "employer") {
 			this.byId("pendingAlert").style.marginTop = "0px";

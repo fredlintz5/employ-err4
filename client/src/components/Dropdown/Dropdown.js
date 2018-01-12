@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-
+	//check boxes for employers desired skills for employee search
 function Dropdown(props) {
 	return (
 		<form   className="text-center" 
