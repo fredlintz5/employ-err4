@@ -1,32 +1,23 @@
 # Employ{err}
-> Web based React application that connect employers with potential employees based on info from the users Linkedin profile
+> Web-based React Application that connects employers with potential employees based on info from the user's LinkedIn profile.
 
 
-##Homepage
+## Homepage
 ![](readme-img/homepage.png)
 
+## User Page
+![](read-me/userpage.png)
+
+## Profile
+![](read-me/profile.png)
 
 
-## Meta
 
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
 
-Distributed under the XYZ license. See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+## Authors
 
-## Contributing
-
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
+- Fred Lintz - (https://github.com/fredlintz5)
+- Megan Landahl - (https://github.com/meglambda)
+- Ash Rotman - (https://github.com/AshRotman)
+- Ed Quintana - (https://github.com/ejquintana)
